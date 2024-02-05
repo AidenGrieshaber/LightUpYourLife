@@ -8,6 +8,9 @@ public class Lamp : MonoBehaviour //Lamp parent master
     [SerializeField] //Scale for the range of the light in tiles
     public float LightDistance = 1;
 
+    //The tile this lamp is on
+    public Tile tileOn = null;
+
     //The dimension of a tile for distance calculations
     public float TileSize = 1;
 
@@ -34,6 +37,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     /// <param name="nearestTile">The tile to snap to</param>
     public void SnapToGrid(Tile nearestTile)
     {
+        tileOn = nearestTile;
+
         Vector3 tilePos = nearestTile.gameObject.transform.position;
         Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
         gameObject.transform.position = snapLocation;
