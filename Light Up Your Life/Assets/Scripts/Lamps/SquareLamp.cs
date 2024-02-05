@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SquareLamp : Lamp //IGONORE THIS CLASS FOR NOW
+public class SquareLamp : Lamp //IGNORE THIS CLASS FOR NOW
 {
     public override void CheckTiles()
     {

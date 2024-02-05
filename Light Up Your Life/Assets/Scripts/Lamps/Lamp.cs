@@ -14,6 +14,9 @@ public class Lamp : MonoBehaviour //Lamp parent master
     //The dimension of a tile for distance calculations
     public float TileSize = 1;
 
+    //Whether or not the lamp is on, may be useful later for visuals
+    public bool isLit = false;
+
     // Start is called before the first frame update
     void Start()
     {
