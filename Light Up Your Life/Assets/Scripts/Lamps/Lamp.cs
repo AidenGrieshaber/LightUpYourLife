@@ -43,7 +43,7 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
 
         state = LampState.Hotbar;
         anchorpoint = Vector3.zero; //This shoule not still be zero by the time it is used
-        //gridManager = lampManager.GetGridManager();
+        gridManager = lampManager.GetGridManager();
     }
 
     // Update is called once per frame
@@ -67,7 +67,7 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
+        //Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
         switch (state)
         {
             case LampState.Hotbar:
@@ -75,6 +75,21 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
                 break;
             case LampState.Held:
                 state = LampState.Placed;
+
+                //Find nearest tile
+                Tile nearest = gridManager.TileArray[0, 0];
+                float smallestSquareDistance = float.MaxValue; //using square magnitude for performance
+                foreach (Tile t in gridManager.TileArray)
+                {
+                    float distance = (t.transform.position - transform.position).sqrMagnitude;
+                    if (distance < smallestSquareDistance)
+                    {
+                        smallestSquareDistance = distance;
+                        nearest = t;
+                    }
+                }
+                SnapToGrid(nearest);
+                CheckTiles();
                 break;
             default:
                 break;
@@ -106,22 +121,5 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
         Vector3 tilePos = nearestTile.gameObject.transform.position;
         Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
         gameObject.transform.position = snapLocation;
-    }
-
-    public void PickUp()
-    {
-        if (state != LampState.Placed) //deny picking up placed lamps for now
-            state = LampState.Held;
-    }
-
-    public void PutDown()
-    {
-        //if placed back in hotbar
-        //state = LampState.Hotbar
-
-        state = LampState.Placed;
-        //Search for nearest tile
-        //SnapToGrid(nearestTile);
-        CheckTiles();
     }
 }

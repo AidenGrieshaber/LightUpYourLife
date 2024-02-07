@@ -21,7 +21,7 @@ public class GridManager : MonoBehaviour
     public Tile[,] TileArray
     {
         get {
-            return this.TileArray;
+            return tileArray;
         }
     }
     void Start()

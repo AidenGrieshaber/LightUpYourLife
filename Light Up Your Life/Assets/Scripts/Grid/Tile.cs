@@ -43,13 +43,13 @@ public class Tile : MonoBehaviour
     {
         highlight.SetActive(false);
     }
-
+    /*
     //TESTING ONLY
     private void OnMouseDown()
     {
         //Trigger the check
         CheckLights(this, 2);
-    }
+    }*/
     private void CheckLights(Tile currentTile, float count)
     {
         //break case

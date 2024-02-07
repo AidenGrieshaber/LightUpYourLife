@@ -10,8 +10,7 @@ public class CircleLamp : Lamp
         if (tileOn == null)
             return;
 
-        float scaledDistance = LightDistance * TileSize;
-        //TODO: how the check works
+        //float scaledDistance = LightDistance * TileSize;
 
         CheckLights(tileOn, LightDistance);
     }
