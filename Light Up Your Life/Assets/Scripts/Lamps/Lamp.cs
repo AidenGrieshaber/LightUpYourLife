@@ -12,7 +12,7 @@ public enum LampState
     Placed
 }
 
-public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
+public class Lamp : MonoBehaviour //Lamp parent master
 {
     [SerializeField] //Scale for the range of the light in tiles
     public float LightDistance = 1;
@@ -36,10 +36,13 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
     [SerializeField]//serialize for now until lampmanager implemented
     private GridManager gridManager;
 
+    //position of this lamp on the hotbar
+    public Vector3 HotbarPosition;
+
     // Start is called before the first frame update
     void Start()
     {
-        AddPhysics2DRaycaster();
+        HotbarPosition = transform.position;
 
         state = LampState.Hotbar;
         anchorpoint = Vector3.zero; //This shoule not still be zero by the time it is used
@@ -49,60 +52,62 @@ public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
     // Update is called once per frame
     void Update()
     {
-        switch(state)
+        if (state == LampState.Held)
         {
-            case LampState.None:
-                break;
-            case LampState.Hotbar:
-                break;
-            case LampState.Held:
-                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                anchorpoint = new Vector3(mouseWorld.x, mouseWorld.y, transform.position.z); //Don't change z pos
-                gameObject.transform.position = anchorpoint;
-                break;
-            case LampState.Placed:
-                break;
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            anchorpoint = new Vector3(mouseWorld.x, mouseWorld.y, transform.position.z); //Don't change z pos
+            gameObject.transform.position = anchorpoint;
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void OnMouseDown()
     {
-        //Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
-        switch (state)
+        if (state == LampState.Hotbar)
         {
-            case LampState.Hotbar:
-                state = LampState.Held;
-                break;
-            case LampState.Held:
-                state = LampState.Placed;
+            state = LampState.Held;
+        }
+    }
 
-                //Find nearest tile
-                Tile nearest = gridManager.TileArray[0, 0];
-                float smallestSquareDistance = float.MaxValue; //using square magnitude for performance
-                foreach (Tile t in gridManager.TileArray)
-                {
-                    float distance = (t.transform.position - transform.position).sqrMagnitude;
-                    if (distance < smallestSquareDistance)
-                    {
-                        smallestSquareDistance = distance;
-                        nearest = t;
-                    }
-                }
+    private void OnMouseUp()
+    {
+        if (state == LampState.Held)
+        {
+            state = LampState.Placed;
+
+            Tile nearest = FindNearestTile();
+            if (nearest != null)
                 SnapToGrid(nearest);
-                CheckTiles();
-                break;
-            default:
-                break;
+            CheckTiles();
         }
     }
 
-    private void AddPhysics2DRaycaster()
+    private Tile FindNearestTile()
     {
-        Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
-        if (physicsRaycaster == null)
+        //Find nearest tile
+        Tile nearest = gridManager.TileArray[0, 0];
+        float smallestSquareDistance = float.MaxValue; //using square magnitude for performance
+        foreach (Tile t in gridManager.TileArray)
         {
-            Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+            float distance = (t.transform.position - transform.position).sqrMagnitude;
+            if (distance < smallestSquareDistance)
+            {
+                smallestSquareDistance = distance;
+                nearest = t;
+            }
         }
+
+        //Check if nearest tile is near enough to be considered snapable
+        float squareDiagonal = Mathf.Pow(TileSize / 2, 2) + Mathf.Pow(TileSize / 2, 2);
+        if (smallestSquareDistance > 1 + squareDiagonal)// the 1+ is to account for difference in z pos
+        {
+            //return to hotbar
+            state = LampState.Hotbar;
+            transform.position = HotbarPosition;
+            Debug.Log(squareDiagonal + " vs " + smallestSquareDistance);
+            return null;
+        }
+
+        return nearest;
     }
 
     /// <summary>
