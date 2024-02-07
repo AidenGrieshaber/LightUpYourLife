@@ -15,6 +15,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
 {
     [SerializeField] //Scale for the range of the light in tiles
     public float LightDistance = 1;
+    [SerializeField]
+    private LampManager lampManager;
 
     //The tile this lamp is on
     public Tile tileOn = null;
@@ -30,11 +32,15 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
     private LampState state;
 
+    [SerializeField]//serialize for now until lampmanager implemented
+    private GridManager gridManager;
+
     // Start is called before the first frame update
     void Start()
     {
         state = LampState.Hotbar;
         anchorpoint = Vector3.zero; //This shoule not still be zero by the time it is used
+        //gridManager = lampManager.GetGridManager();
     }
 
     // Update is called once per frame
@@ -45,10 +51,31 @@ public class Lamp : MonoBehaviour //Lamp parent master
             case LampState.None:
                 break;
             case LampState.Hotbar:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+                    if (hit != null && hit.collider != null)
+                    {
+                        state = LampState.Held;
+                    }
+                }
                 break;
             case LampState.Held:
-                //anchorpoint = ...
+                anchorpoint = Input.mousePosition;
                 gameObject.transform.position = anchorpoint;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+                    if (hit != null && hit.collider != null)
+                    {
+                        state = LampState.Placed;
+                    }
+                }
                 break;
             case LampState.Placed:
                 break;
@@ -87,5 +114,6 @@ public class Lamp : MonoBehaviour //Lamp parent master
         state = LampState.Placed;
         //Search for nearest tile
         //SnapToGrid(nearestTile);
+        CheckTiles();
     }
 }

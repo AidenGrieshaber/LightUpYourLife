@@ -6,6 +6,8 @@ public class LampManager : MonoBehaviour
 {
     [SerializeField]
     private List<Lamp> lamps;
+    [SerializeField]
+    private GridManager gridManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,8 @@ public class LampManager : MonoBehaviour
     {
         
     }
+
+    public GridManager GetGridManager() => gridManager;
 
     public void AllLampsCheckTiles()
     {
