@@ -9,25 +9,39 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
-    
+
     //Reference to the tile prefab that makes up the grid
     [SerializeField] private Tile tileObject;
 
     [SerializeField] private Transform mainCamera;
+    [SerializeField] private GameObject gridTiles;
+
+    private Tile[,] tileArray;
+
+    public Tile[,] TileArray
+    {
+        get {
+            return this.TileArray;
+        }
+    }
     void Start()
     {
+        tileArray = new Tile[gridWidth, gridHeight];
         GenerateGrid();
+
+        Debug.Log(tileArray.Length);
     }
 
     //Instantiates the tile prefab to create the grid
     void GenerateGrid()
     {
         //Determines the width of the grid
-        for (int i = 0; i< gridWidth; i++)
+        for (int i = 0; i < gridWidth; i++)
         {
             //Determines the height of the grid
-            for (int j=0; j<gridHeight; j++) {
-                Tile newTile = Instantiate(tileObject, new Vector3(i,j), Quaternion.identity);
+            for (int j = 0; j < gridHeight; j++)
+            {
+                Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
                 //Sets the name of each tile in the inspector
                 newTile.name = "t" + i + " " + j;
 
@@ -35,9 +49,13 @@ public class GridManager : MonoBehaviour
                 //To change its color
                 bool isOffset = (i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0);
                 newTile.ChangeColor(isOffset);
+
+
+                tileArray[i, j] = newTile;
+
             }
         }
         //Sets the position of the camera to above the created grid
-        mainCamera.transform.position = new Vector3((float)gridWidth/2 -0.5f, (float)gridHeight/2 - 0.5f, -10);
+        mainCamera.transform.position = new Vector3((float)gridWidth / 2 - 0.5f, (float)gridHeight / 2 - 0.5f, -10);
     }
 }
