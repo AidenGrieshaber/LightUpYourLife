@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public enum LampState
@@ -11,7 +12,7 @@ public enum LampState
     Placed
 }
 
-public class Lamp : MonoBehaviour //Lamp parent master
+public class Lamp : MonoBehaviour, IPointerDownHandler //Lamp parent master
 {
     [SerializeField] //Scale for the range of the light in tiles
     public float LightDistance = 1;
@@ -38,6 +39,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     // Start is called before the first frame update
     void Start()
     {
+        AddPhysics2DRaycaster();
+
         state = LampState.Hotbar;
         anchorpoint = Vector3.zero; //This shoule not still be zero by the time it is used
         //gridManager = lampManager.GetGridManager();
@@ -51,34 +54,39 @@ public class Lamp : MonoBehaviour //Lamp parent master
             case LampState.None:
                 break;
             case LampState.Hotbar:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-                    if (hit != null && hit.collider != null)
-                    {
-                        state = LampState.Held;
-                    }
-                }
                 break;
             case LampState.Held:
-                anchorpoint = Input.mousePosition;
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                anchorpoint = new Vector3(mouseWorld.x, mouseWorld.y, transform.position.z); //Don't change z pos
                 gameObject.transform.position = anchorpoint;
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-                    if (hit != null && hit.collider != null)
-                    {
-                        state = LampState.Placed;
-                    }
-                }
                 break;
             case LampState.Placed:
                 break;
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
+        switch (state)
+        {
+            case LampState.Hotbar:
+                state = LampState.Held;
+                break;
+            case LampState.Held:
+                state = LampState.Placed;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void AddPhysics2DRaycaster()
+    {
+        Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
+        if (physicsRaycaster == null)
+        {
+            Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
         }
     }
 
