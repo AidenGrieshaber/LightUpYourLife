@@ -1834,7 +1834,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 907120169}
-  - component: {fileID: 907120170}
   m_Layer: 5
   m_Name: GameStats
   m_TagString: Untagged
@@ -1864,18 +1863,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &907120170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907120168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78bf9eb5efe66894491a02ffd3b65bc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &950623233 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
@@ -2665,6 +2652,8 @@ MonoBehaviour:
   tileObject: {fileID: 5012561577099889527, guid: d8be5834ce6ea0f409f2bd62d69ad55d, type: 3}
   mainCamera: {fileID: 625576909}
   gridTiles: {fileID: 2109256057}
+  lightCoverage: {fileID: 497098118}
+  lights: 0
 --- !u!4 &1599658551
 Transform:
   m_ObjectHideFlags: 0
@@ -2874,8 +2863,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 139951629}
   m_HandleRect: {fileID: 139951628}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

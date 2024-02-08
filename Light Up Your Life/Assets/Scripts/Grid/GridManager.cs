@@ -1,4 +1,8 @@
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 /// <summary>
 /// Created by Chris LoSardo
@@ -16,6 +20,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject gridTiles;
 
+    [SerializeField] public TMP_Text lightCoverage;
+    [SerializeField] private double lights;
+
     private Tile[,] tileArray;
 
     public Tile[,] TileArray
@@ -24,12 +31,31 @@ public class GridManager : MonoBehaviour
             return tileArray;
         }
     }
+
     void Start()
     {
         tileArray = new Tile[gridWidth, gridHeight];
         GenerateGrid();
 
         Debug.Log(tileArray.Length);
+    }
+
+    private void Update()
+    {
+        lights = 0;
+
+        for (int i = 0; i < gridWidth; i++)
+        {
+            for(int j = 0; j < gridHeight; j++)
+            {
+                if (tileArray[i, j].IsLit == true)
+                {
+                    lights += 100.00 / (gridWidth * gridHeight);
+                }
+            }
+        }
+
+        lightCoverage.text = "Light Coverage: " + lights.ToString() + "%";
     }
 
     //Instantiates the tile prefab to create the grid
