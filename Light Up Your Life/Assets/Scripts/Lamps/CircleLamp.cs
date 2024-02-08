@@ -26,7 +26,7 @@ public class CircleLamp : Lamp
         currentTile.IsLit = true;
 
         //Change the lit tile visually
-        currentTile.renderer.color = Color.red;
+        currentTile.renderer.color = Color.yellow;
         currentTile.highlight.SetActive(false);
 
         Tile tileUp = null;
