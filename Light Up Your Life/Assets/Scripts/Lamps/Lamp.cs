@@ -18,6 +18,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     public float LightDistance = 1;
     [SerializeField]
     private LampManager lampManager;
+    [SerializeField]
+    protected List<Sprite> spriteSheet;
 
     //The tile this lamp is on
     public Tile tileOn = null;
@@ -31,7 +33,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     //Point for the lamp to follow while it is held, likely the mouse or touch input
     public Vector3 anchorpoint;
 
-    private LampState state;
+    protected LampState state;
 
     [SerializeField]//serialize for now until lampmanager implemented
     private GridManager gridManager;
@@ -40,7 +42,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     public Vector3 HotbarPosition;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         HotbarPosition = transform.position;
 
@@ -50,7 +52,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (state == LampState.Held)
         {
