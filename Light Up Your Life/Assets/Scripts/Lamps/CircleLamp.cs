@@ -8,7 +8,7 @@ public class CircleLamp : Lamp
 {
     private short frame = 0;
     private float counter = 0;
-    private static float animationTimer = .18f;
+    private static float animationTimer = .12f;
 
     protected override void Update()
     {
@@ -25,8 +25,9 @@ public class CircleLamp : Lamp
                     frame = 3;
                 }
             }
-            gameObject.GetComponent<SpriteRenderer>().sprite = spriteSheet[frame + 1];
+            gameObject.GetComponent<SpriteRenderer>().sprite = spriteSheet[frame];
         }
+        base.Update();
     }
 
     public override void CheckTiles()

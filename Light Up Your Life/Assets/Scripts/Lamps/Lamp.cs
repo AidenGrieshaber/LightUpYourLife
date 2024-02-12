@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
     private void OnMouseDown()
     {
-        if (state == LampState.Hotbar)
+        Console.WriteLine("ran");
+        if (state == LampState.Hotbar || state == LampState.None)
         {
             state = LampState.Held;
         }
