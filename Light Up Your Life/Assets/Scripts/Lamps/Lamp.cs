@@ -79,6 +79,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             Tile nearest = FindNearestTile();
             if (nearest != null)
                 SnapToGrid(nearest);
+
             CheckTiles();
         }
     }

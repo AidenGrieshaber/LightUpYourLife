@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Created by Chris LoSardo
@@ -59,6 +61,7 @@ public class Tile : MonoBehaviour
         }
 
         currentTile.IsLit = true;
+
 
         //Change the lit tile visually
         currentTile.renderer.color = Color.red;
