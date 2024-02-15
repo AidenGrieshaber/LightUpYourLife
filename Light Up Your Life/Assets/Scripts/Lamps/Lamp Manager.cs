@@ -23,10 +23,10 @@ public class LampManager : MonoBehaviour
 
     public GridManager GetGridManager() => gridManager;
 
-    public void AllLampsCheckTiles()
+    public void AllLampsLightTiles()
     {
         foreach (Lamp lamp in lamps)
-            lamp.CheckTiles();
+            lamp.LightTiles();
     }
 
     public void AddLamp(Lamp lamp)

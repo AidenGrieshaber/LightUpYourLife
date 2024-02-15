@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SquareLamp : Lamp //IGNORE THIS CLASS FOR NOW
 {
-    public override void CheckTiles()
+    protected override List<Tile> CheckTiles()
     {
         if (tileOn == null)
-            return;
+            return null;
 
         float scaledDistance = LightDistance * TileSize;
         
@@ -21,5 +21,7 @@ public class SquareLamp : Lamp //IGNORE THIS CLASS FOR NOW
                 //Tiles at each of these locations are lit if a line can be drawn to them
             }
         }
+
+        return null;
     }
 }

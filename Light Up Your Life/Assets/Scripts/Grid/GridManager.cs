@@ -84,4 +84,21 @@ public class GridManager : MonoBehaviour
         //Sets the position of the camera to above the created grid
         mainCamera.transform.position = new Vector3((float)gridWidth / 2 - 0.5f, (float)gridHeight / 2 - 0.5f, -10);
     }
+
+    public void UnHightlightTiles()
+    {
+        for (int i = 0; i < gridWidth; i++)
+        {
+            //Determines the height of the grid
+            for (int j = 0; j < gridHeight; j++)
+            {
+                //This bool determines whether or not this tile is an even or odd tile in order
+                //To change its color
+                bool isOffset = (i + j) % 2 == 1; //my way of checking this is more epic than Chris's
+
+                if (!tileArray[i, j].IsLit)
+                    tileArray[i, j].ChangeColor(isOffset);
+            }
+        }
+    }
 }

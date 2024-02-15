@@ -60,12 +60,13 @@ public class Lamp : MonoBehaviour //Lamp parent master
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             anchorpoint = new Vector3(mouseWorld.x, mouseWorld.y, transform.position.z); //Don't change z pos
             gameObject.transform.position = anchorpoint;
+
+            HighlightTiles();
         }
     }
 
     private void OnMouseDown()
     {
-        Console.WriteLine("ran");
         if (state == LampState.Hotbar || state == LampState.None)
         {
             state = LampState.Held;
@@ -80,20 +81,30 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
             Tile nearest = FindNearestTile();
             if (nearest != null)
+            {
                 SnapToGrid(nearest);
+                gridManager.UnHightlightTiles();
+            }
+            else
+            {
+                //return to hotbar
+                state = LampState.Hotbar;
+                transform.position = HotbarPosition;
+            }
 
-            CheckTiles();
+            LightTiles();
         }
     }
 
-    private Tile FindNearestTile()
+    protected Tile FindNearestTile()
     {
         //Find nearest tile
         Tile nearest = gridManager.TileArray[0, 0];
         float smallestSquareDistance = float.MaxValue; //using square magnitude for performance
         foreach (Tile t in gridManager.TileArray)
         {
-            float distance = (t.transform.position - transform.position).sqrMagnitude;
+            //account for x and y only
+            float distance = (float)Math.Pow(t.transform.position.x - transform.position.x, 2) + (float)Math.Pow(t.transform.position.y - transform.position.y, 2);
             if (distance < smallestSquareDistance)
             {
                 smallestSquareDistance = distance;
@@ -103,22 +114,51 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
         //Check if nearest tile is near enough to be considered snapable
         float squareDiagonal = Mathf.Pow(TileSize / 2, 2) + Mathf.Pow(TileSize / 2, 2);
-        if (smallestSquareDistance > 1 + squareDiagonal)// the 1+ is to account for difference in z pos
-        {
-            //return to hotbar
-            state = LampState.Hotbar;
-            transform.position = HotbarPosition;
-            Debug.Log(squareDiagonal + " vs " + smallestSquareDistance);
+        if (smallestSquareDistance > squareDiagonal)// the 1+ is to account for difference in z pos
             return null;
-        }
 
         return nearest;
     }
 
     /// <summary>
-    /// The method used to check nearby tiles
+    /// The method used to find unobstructed nearby tiles
     /// </summary>
-    public virtual void CheckTiles() { }
+    protected virtual List<Tile> CheckTiles() { return null; }
+
+    /// <summary>
+    /// Highlights tiles in range for being held
+    /// </summary>
+    public void HighlightTiles()
+    {
+        gridManager.UnHightlightTiles();
+        List<Tile> nearTiles = CheckTiles();
+        if (nearTiles != null) //tiles do not need to light if the lamp isn't on the board
+        {
+            foreach (Tile t in nearTiles)
+            {
+                if (!t.IsLit)
+                {
+                    //Change the lit tile visually
+                    t.renderer.color = Color.green;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Lights up tiles in range
+    /// </summary>
+    public void LightTiles()
+    {
+        List<Tile> nearTiles = CheckTiles();
+        foreach (Tile t in nearTiles)
+        {
+            t.IsLit = true;
+            //Change the lit tile visually
+            t.renderer.color = Color.yellow;
+            t.highlight.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// Snap to a grid tile

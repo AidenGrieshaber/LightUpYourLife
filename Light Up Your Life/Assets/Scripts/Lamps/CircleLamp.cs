@@ -30,29 +30,26 @@ public class CircleLamp : Lamp
         base.Update();
     }
 
-    public override void CheckTiles()
+    protected override List<Tile> CheckTiles()
     {
-        if (tileOn == null)
-            return;
-
-        //float scaledDistance = LightDistance * TileSize;
-
-        CheckLights(tileOn, LightDistance);
+        if (tileOn == null) //use tileOn if on a tile, calculate nearest otherwise
+            return CheckLights(FindNearestTile(), LightDistance);
+        else
+        {
+            Tile nearest = FindNearestTile();
+            if (nearest != null)
+                return CheckLights(tileOn, LightDistance);
+            return null;
+        }
     }
 
-    private void CheckLights(Tile currentTile, float count)
+    private List<Tile> CheckLights(Tile currentTile, float count)
     {
         //break case
         if (count <= 0 || currentTile == null)
         {
-            return;
+            return new List<Tile>();
         }
-
-        currentTile.IsLit = true;
-
-        //Change the lit tile visually
-        currentTile.renderer.color = Color.yellow;
-        currentTile.highlight.SetActive(false);
 
         Tile tileUp = null;
         Tile tileDown = null;
@@ -75,10 +72,15 @@ public class CircleLamp : Lamp
         { tileLeft = Physics2D.Raycast(currentTile.transform.position, -Vector2.right).collider.GetComponent<Tile>(); }
         catch (Exception e) { }
 
+        List<Tile> tiles = new List<Tile>();
+        tiles.Add(currentTile);
+
         //Recursively check the surrounding tiles
-        CheckLights(tileUp, count - 1);
-        CheckLights(tileDown, count - 1);
-        CheckLights(tileLeft, count - 1);
-        CheckLights(tileRight, count - 1);
+        tiles.AddRange(CheckLights(tileUp, count - 1));
+        tiles.AddRange(CheckLights(tileDown, count - 1));
+        tiles.AddRange(CheckLights(tileLeft, count - 1));
+        tiles.AddRange(CheckLights(tileRight, count - 1));
+
+        return tiles;
     }
 }

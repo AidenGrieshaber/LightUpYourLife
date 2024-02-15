@@ -12,12 +12,13 @@ public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
     [SerializeField]
     float range = 30;
 
-    public override void CheckTiles()
+    protected override List<Tile> CheckTiles()
     {
         if (tileOn == null)
-            return;
+            return null;
 
         float scaledDistance = LightDistance * TileSize;
         //Use circle check, but only accept if checked points are within a certain range of the angle
+        return null;
     }
 }
