@@ -476,6 +476,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: attatchment
+      value: 
+      objectReference: {fileID: 134248831}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1599658550}
@@ -1318,6 +1322,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: attatchment
+      value: 
+      objectReference: {fileID: 134248831}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: gridManager
       value: 
@@ -3068,6 +3076,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: attatchment
+      value: 
+      objectReference: {fileID: 134248831}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1599658550}
@@ -3454,6 +3466,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: attatchment
+      value: 
+      objectReference: {fileID: 134248831}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1599658550}
@@ -3805,6 +3821,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: attatchment
+      value: 
+      objectReference: {fileID: 134248831}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: gridManager
       value: 
