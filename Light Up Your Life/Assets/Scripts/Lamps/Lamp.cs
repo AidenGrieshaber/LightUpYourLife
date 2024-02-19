@@ -21,6 +21,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     private LampManager lampManager;
     [SerializeField]
     protected List<Sprite> spriteSheet;
+    [SerializeField]
+    private GameObject attatchment = null;
 
     //The tile this lamp is on
     public Tile tileOn = null;
@@ -70,6 +72,9 @@ public class Lamp : MonoBehaviour //Lamp parent master
         if (state == LampState.Hotbar || state == LampState.None)
         {
             state = LampState.Held;
+
+            if (attatchment != null)
+                attatchment.SetActive(false);
         }
     }
 
