@@ -59,7 +59,7 @@ public class Tile : MonoBehaviour
         {
             return;
         }
-
+        Debug.Log("CheckLights");
         currentTile.IsLit = true;
 
 

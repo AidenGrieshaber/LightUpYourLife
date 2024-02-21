@@ -37,7 +37,7 @@ public class GridManager : MonoBehaviour
         tileArray = new Tile[gridWidth, gridHeight];
         GenerateGrid();
 
-        Debug.Log(tileArray.Length);
+        //Debug.Log(tileArray.Length);
     }
 
     private void Update()
