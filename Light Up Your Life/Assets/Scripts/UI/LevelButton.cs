@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     [SerializeField] private int stars;
-    [SerializeField] private GameObject litStarPrefab;
-    [SerializeField] private GameObject unlitLightPrefab;
+    //[SerializeField] private GameObject litStarPrefab;
+    //[SerializeField] private GameObject unlitLightPrefab;
 
     public string connectedScene;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {/*
         //Generate the stars
         for (int i = 0; i < 3; i++)
         {
@@ -29,11 +29,12 @@ public class LevelButton : MonoBehaviour
                 GameObject star = Instantiate(unlitLightPrefab);
                 star.transform.position = transform.position + new Vector3(.5f * (i - 1), -.5f, 0);
             }
-        }
+        }*/
     }
 
-    private void LoadGivenScene()
+    public void LoadGivenScene()
     {
-        SceneManager.LoadScene(connectedScene);
+        Debug.Log("clicked");
+        //SceneManager.LoadScene(connectedScene);
     }
 }
