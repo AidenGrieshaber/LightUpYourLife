@@ -9,6 +9,7 @@ public class CircleLamp : Lamp
     private short frame = 0;
     private float counter = 0;
     private static float animationTimer = .12f;
+    public LayerMask IgnoreLayer;
 
     protected override void Update()
     {
@@ -57,20 +58,20 @@ public class CircleLamp : Lamp
         Tile tileRight = null;
 
         try
-        { tileUp = Physics2D.Raycast(currentTile.transform.position, Vector2.up).collider.GetComponent<Tile>(); }
-        catch (Exception e) { }
+        { tileUp = Physics2D.Raycast(currentTile.transform.position, -Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
+        catch (Exception e) {  }
 
         try
-        { tileDown = Physics2D.Raycast(currentTile.transform.position, -Vector2.up).collider.GetComponent<Tile>(); }
-        catch (Exception e) { }
+        { tileDown = Physics2D.Raycast(currentTile.transform.position, Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
+        catch (Exception e) {  }
 
         try
-        { tileRight = Physics2D.Raycast(currentTile.transform.position, Vector2.right).collider.GetComponent<Tile>(); }
-        catch (Exception e) { }
+        { tileRight = Physics2D.Raycast(currentTile.transform.position, -Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
+        catch (Exception e) {  }
 
         try
-        { tileLeft = Physics2D.Raycast(currentTile.transform.position, -Vector2.right).collider.GetComponent<Tile>(); }
-        catch (Exception e) { }
+        { tileLeft = Physics2D.Raycast(currentTile.transform.position, Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
+        catch (Exception e) {  }
 
         List<Tile> tiles = new List<Tile>();
         tiles.Add(currentTile);
@@ -81,6 +82,6 @@ public class CircleLamp : Lamp
         tiles.AddRange(CheckLights(tileLeft, count - 1));
         tiles.AddRange(CheckLights(tileRight, count - 1));
 
-        return tiles;
+        return tiles; 
     }
 }
