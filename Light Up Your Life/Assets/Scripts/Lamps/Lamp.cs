@@ -88,7 +88,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             if (nearest != null)
             {
                 SnapToGrid(nearest);
-                gridManager.UnHightlightTiles();
+                gridManager.UnHighlightTiles();
             }
             else
             {
@@ -109,7 +109,9 @@ public class Lamp : MonoBehaviour //Lamp parent master
         foreach (Tile t in gridManager.TileArray)
         {
             //account for x and y only
-            float distance = (float)Math.Pow(t.transform.position.x - transform.position.x, 2) + (float)Math.Pow(t.transform.position.y - transform.position.y, 2);
+            float distance = (float)Math.Pow(t.transform.position.x - transform.position.x, 2) +
+                (float)Math.Pow(t.transform.position.y - transform.position.y, 2);
+
             if (distance < smallestSquareDistance)
             {
                 smallestSquareDistance = distance;
@@ -135,7 +137,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     /// </summary>
     public void HighlightTiles()
     {
-        gridManager.UnHightlightTiles();
+        gridManager.UnHighlightTiles();
         List<Tile> nearTiles = CheckTiles();
         if (nearTiles != null) //tiles do not need to light if the lamp isn't on the board
         {

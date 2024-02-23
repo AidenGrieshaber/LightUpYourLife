@@ -11,6 +11,14 @@ using UnityEngine.UI;
 /// 2/3/2024
 /// Variables and logic for the tiles
 /// </summary>
+/// 
+
+public enum TileType
+{
+    Tile,
+    Obstacle,
+    Table
+}
 public class Tile : MonoBehaviour
 {
     [SerializeField] private Color tileColor;
@@ -19,25 +27,59 @@ public class Tile : MonoBehaviour
     [SerializeField] public GameObject highlight;
     [SerializeField] public bool IsLit;
 
+    protected TileType tileType;
 
+
+    public TileType TileTypeGet
+    {
+        get
+        {
+            return tileType;
+        }
+    }
     public void ChangeColor(bool isOffset)
     {
-        if (isOffset)
+        if (tileType == TileType.Tile)
         {
-            renderer.color = tileColor2;
+            //Debug.Log("TileType.Tile");
+            if (isOffset)
+            {
+                renderer.color = tileColor2;
+            }
+            else
+            {
+                renderer.color = tileColor;
+            }
         }
-        else
+        else if (tileType == TileType.Obstacle)
         {
-            renderer.color = tileColor;
+            renderer.color = Color.black;
         }
+        
     }
 
     private void OnMouseEnter()
     {
         //Only highlight if the tile is not currently lit
-        if(!IsLit)
+        if (!IsLit)
         {
             highlight.SetActive(true);
+        }
+    }
+
+    public void SetTileType(Tile currentTile, char identifier)
+    {
+        switch (identifier)
+        {
+            case '-':
+                currentTile.tileType = TileType.Tile;
+                break;
+            case 'o':
+                currentTile.tileType = TileType.Obstacle;
+                break;
+            default:
+                currentTile.tileType = TileType.Tile;
+                break;
         }
     }
 
@@ -55,7 +97,7 @@ public class Tile : MonoBehaviour
     private void CheckLights(Tile currentTile, float count)
     {
         //break case
-        if(count <= 0 || currentTile == null)
+        if (count <= 0 || currentTile == null || currentTile.tileType == TileType.Obstacle)
         {
             return;
         }
@@ -74,19 +116,19 @@ public class Tile : MonoBehaviour
 
         try
         { tileUp = Physics2D.Raycast(currentTile.transform.position, Vector2.up).collider.GetComponent<Tile>(); }
-        catch(Exception e){}
+        catch (Exception e) { }
 
         try
         { tileDown = Physics2D.Raycast(currentTile.transform.position, -Vector2.up).collider.GetComponent<Tile>(); }
-        catch (Exception e){}
+        catch (Exception e) { }
 
         try
         { tileRight = Physics2D.Raycast(currentTile.transform.position, Vector2.right).collider.GetComponent<Tile>(); }
-        catch (Exception e){}
+        catch (Exception e) { }
 
         try
         { tileLeft = Physics2D.Raycast(currentTile.transform.position, -Vector2.right).collider.GetComponent<Tile>(); }
-        catch (Exception e){}
+        catch (Exception e) { }
 
         //Recursively check the surrounding tiles
         CheckLights(tileUp, count - 1);
