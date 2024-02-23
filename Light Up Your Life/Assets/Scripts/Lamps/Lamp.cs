@@ -85,7 +85,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             state = LampState.Placed;
             
             Tile nearest = FindNearestTile();
-            if (nearest != null)
+            if (nearest != null && nearest.TileTypeGet != TileType.Obstacle)
             {
                 SnapToGrid(nearest);
                 gridManager.UnHighlightTiles();
@@ -95,6 +95,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
                 //return to hotbar
                 state = LampState.Hotbar;
                 transform.position = HotbarPosition;
+                gridManager.UnHighlightTiles();
             }
 
             LightTiles();
@@ -145,7 +146,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
         {
             foreach (Tile t in nearTiles)
             {
-                if (!t.IsLit)
+                if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
                 {
                     //Change the lit tile visually
                     t.renderer.color = Color.green;
@@ -162,10 +163,14 @@ public class Lamp : MonoBehaviour //Lamp parent master
         List<Tile> nearTiles = CheckTiles();
         foreach (Tile t in nearTiles)
         {
-            t.IsLit = true;
-            //Change the lit tile visually
-            t.renderer.color = Color.yellow;
-            t.highlight.SetActive(false);
+            if (t.TileTypeGet != TileType.Obstacle)
+            {
+                t.IsLit = true;
+                //Change the lit tile visually
+                t.renderer.color = Color.yellow;
+                t.highlight.SetActive(false);
+            }
+           
         }
     }
 

@@ -61,7 +61,7 @@ public class Tile : MonoBehaviour
     private void OnMouseEnter()
     {
         //Only highlight if the tile is not currently lit
-        if (!IsLit)
+        if (!IsLit && TileTypeGet != TileType.Obstacle)
         {
             highlight.SetActive(true);
         }
