@@ -83,7 +83,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
         if (state == LampState.Held)
         {
             state = LampState.Placed;
-
+            
             Tile nearest = FindNearestTile();
             if (nearest != null)
             {
@@ -98,6 +98,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
             }
 
             LightTiles();
+
+            
         }
     }
 

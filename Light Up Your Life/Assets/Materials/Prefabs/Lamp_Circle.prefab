@@ -107,12 +107,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3b44b91a055462f4d9a2f9cdcfa61398, type: 3}
   - {fileID: 21300000, guid: 865199ebd2c142f4281097cfc6431796, type: 3}
   - {fileID: 21300000, guid: 3761e272661d34541bc192c1bd856d71, type: 3}
+  attatchment: {fileID: 0}
   tileOn: {fileID: 0}
   TileSize: 1
   isLit: 0
   anchorpoint: {x: 0, y: 0, z: 0}
   gridManager: {fileID: 0}
   HotbarPosition: {x: 0, y: 0, z: 0}
+  IgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!61 &-5805553762326176515
 BoxCollider2D:
   m_ObjectHideFlags: 0

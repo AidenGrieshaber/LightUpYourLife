@@ -22,7 +22,16 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject gridTiles;
 
     [SerializeField] public TMP_Text lightCoverage;
-    [SerializeField] private double lights;
+    [SerializeField] private float lights;
+
+    [SerializeField] public Image ProgressMask;
+
+    [SerializeField] public GameObject BStar1;
+    [SerializeField] public GameObject BStar2;
+    [SerializeField] public GameObject BStar3;
+    [SerializeField] public GameObject WStar1;
+    [SerializeField] public GameObject WStar2;
+    [SerializeField] public GameObject WStar3;
 
     private Tile[,] tileArray;
 
@@ -58,12 +67,34 @@ public class GridManager : MonoBehaviour
             {
                 if (tileArray[i, j].IsLit == true)
                 {
-                    lights += 100.00 / (gridWidth * gridHeight);
+                    lights += 100 / (gridWidth * gridHeight);
                 }
             }
         }
 
-        lightCoverage.text = "Light Coverage: " + lights.ToString() + "%";
+        ProgressMask.fillAmount = lights / 100;
+
+        if(lights > 50)
+        {
+            BStar1.SetActive(false);
+            WStar1.SetActive(true);
+        }
+
+        if (lights > 70)
+        {
+            BStar2.SetActive(false);
+            WStar2.SetActive(true);
+        }
+
+        if (lights == 100)
+        {
+            BStar3.SetActive(false);
+            WStar3.SetActive(true);
+        }
+
+        int light = (int)lights;
+
+        lightCoverage.text = light.ToString() + "%";
     }
 
     //Instantiates the tile prefab to create the grid
