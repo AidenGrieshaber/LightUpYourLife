@@ -29,6 +29,15 @@ public class Tile : MonoBehaviour
 
     protected TileType tileType;
 
+    public void Start()
+    {
+        if (TileTypeGet == TileType.Obstacle)
+        {
+            int LayermaskInt = LayerMask.NameToLayer("Default");
+            gameObject.layer = LayermaskInt;
+        }
+        
+    }
 
     public TileType TileTypeGet
     {

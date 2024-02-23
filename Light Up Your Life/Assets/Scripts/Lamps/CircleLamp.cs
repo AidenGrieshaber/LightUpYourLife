@@ -11,6 +11,7 @@ public class CircleLamp : Lamp
     private static float animationTimer = .12f;
     public LayerMask IgnoreLayer;
 
+
     protected override void Update()
     {
         //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
@@ -74,6 +75,7 @@ public class CircleLamp : Lamp
         catch (Exception e) {  }
 
         List<Tile> tiles = new List<Tile>();
+
         tiles.Add(currentTile);
 
         //Recursively check the surrounding tiles

@@ -23,6 +23,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     protected List<Sprite> spriteSheet;
     [SerializeField]
     private GameObject attatchment = null;
+    [SerializeField]
+    private LayerMask tileLayer;
 
     //The tile this lamp is on
     public Tile tileOn = null;
@@ -142,6 +144,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     {
         gridManager.UnHighlightTiles();
         List<Tile> nearTiles = CheckTiles();
+
+
         if (nearTiles != null) //tiles do not need to light if the lamp isn't on the board
         {
             foreach (Tile t in nearTiles)
@@ -153,6 +157,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
                 }
             }
         }
+
+
     }
 
     /// <summary>
@@ -161,6 +167,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     public void LightTiles()
     {
         List<Tile> nearTiles = CheckTiles();
+
+        
         foreach (Tile t in nearTiles)
         {
             if (t.TileTypeGet != TileType.Obstacle)
@@ -171,6 +179,11 @@ public class Lamp : MonoBehaviour //Lamp parent master
                 t.highlight.SetActive(false);
             }
            
+        }
+
+        foreach (Tile t in nearTiles)
+        {
+            CheckShadows(t, nearTiles);
         }
     }
 
@@ -186,4 +199,20 @@ public class Lamp : MonoBehaviour //Lamp parent master
         Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
         gameObject.transform.position = snapLocation;
     }
+
+    private void CheckShadows(Tile cTile, List<Tile> nearTiles)
+    {
+        Vector3 DirToLight = (this.tileOn.transform.position - cTile.transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, Mathf.Infinity, ~tileLayer);
+        Debug.Log(hit.collider + " " + cTile);
+        if(hit.collider != null && hit.collider.tag != "Lamp")
+        {
+            cTile.IsLit = false;
+            cTile.ChangeColor(true);
+            cTile.highlight.SetActive(false);
+        }
+
+    }
+
+
 }
