@@ -10,6 +10,12 @@ public class Singleton : MonoBehaviour
     [HideInInspector]
     private int id;
 
+    public int ID
+    {
+        get { return id; }
+        set { id = value; }
+    }
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
