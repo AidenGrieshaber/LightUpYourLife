@@ -83,21 +83,24 @@ public class Lamp : MonoBehaviour //Lamp parent master
         if (state == LampState.Held)
         {
             state = LampState.Placed;
-
+            
             Tile nearest = FindNearestTile();
-            if (nearest != null)
+            if (nearest != null && nearest.TileTypeGet != TileType.Obstacle)
             {
                 SnapToGrid(nearest);
-                gridManager.UnHightlightTiles();
+                gridManager.UnHighlightTiles();
             }
             else
             {
                 //return to hotbar
                 state = LampState.Hotbar;
                 transform.position = HotbarPosition;
+                gridManager.UnHighlightTiles();
             }
 
             LightTiles();
+
+            
         }
     }
 
@@ -109,7 +112,9 @@ public class Lamp : MonoBehaviour //Lamp parent master
         foreach (Tile t in gridManager.TileArray)
         {
             //account for x and y only
-            float distance = (float)Math.Pow(t.transform.position.x - transform.position.x, 2) + (float)Math.Pow(t.transform.position.y - transform.position.y, 2);
+            float distance = (float)Math.Pow(t.transform.position.x - transform.position.x, 2) +
+                (float)Math.Pow(t.transform.position.y - transform.position.y, 2);
+
             if (distance < smallestSquareDistance)
             {
                 smallestSquareDistance = distance;
@@ -135,13 +140,13 @@ public class Lamp : MonoBehaviour //Lamp parent master
     /// </summary>
     public void HighlightTiles()
     {
-        gridManager.UnHightlightTiles();
+        gridManager.UnHighlightTiles();
         List<Tile> nearTiles = CheckTiles();
         if (nearTiles != null) //tiles do not need to light if the lamp isn't on the board
         {
             foreach (Tile t in nearTiles)
             {
-                if (!t.IsLit)
+                if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
                 {
                     //Change the lit tile visually
                     t.renderer.color = Color.green;
@@ -158,10 +163,14 @@ public class Lamp : MonoBehaviour //Lamp parent master
         List<Tile> nearTiles = CheckTiles();
         foreach (Tile t in nearTiles)
         {
-            t.IsLit = true;
-            //Change the lit tile visually
-            t.renderer.color = Color.yellow;
-            t.highlight.SetActive(false);
+            if (t.TileTypeGet != TileType.Obstacle)
+            {
+                t.IsLit = true;
+                //Change the lit tile visually
+                t.renderer.color = Color.yellow;
+                t.highlight.SetActive(false);
+            }
+           
         }
     }
 
