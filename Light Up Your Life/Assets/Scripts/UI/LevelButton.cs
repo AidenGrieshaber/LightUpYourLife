@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,33 +9,42 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     [SerializeField] private int stars;
-    //[SerializeField] private GameObject litStarPrefab;
-    //[SerializeField] private GameObject unlitLightPrefab;
+    [SerializeField] private SpriteRenderer star1;
+    [SerializeField] private SpriteRenderer star2;
+    [SerializeField] private SpriteRenderer star3;
+    [SerializeField] private TextMeshProUGUI number;
+    [SerializeField] private int levelID;
+
+    private List<SpriteRenderer> starList;
 
     public string connectedScene;
 
     // Start is called before the first frame update
     void Start()
-    {/*
-        //Generate the stars
+    {
+        starList = new List<SpriteRenderer>() { star1, star2, star3};
+        LoadLevelSelect();
+    }
+
+    public void LoadLevelSelect()
+    {
+        number.text = "" + levelID;
         for (int i = 0; i < 3; i++)
         {
             if (i < stars)
             {
-                GameObject star = Instantiate(litStarPrefab);
-                star.transform.position = transform.position + new Vector3(.5f * (i-1),-.5f,0);
+                starList[i].color = Color.white;
             }
             else
             {
-                GameObject star = Instantiate(unlitLightPrefab);
-                star.transform.position = transform.position + new Vector3(.5f * (i - 1), -.5f, 0);
+                starList[i].color = new Color32(0x66, 0x66, 0x66, 0xFF);
             }
-        }*/
+        }
     }
 
     public void LoadGivenScene()
     {
         Debug.Log("clicked");
-        //SceneManager.LoadScene(connectedScene);
+        Singleton.Instance.SetID(levelID);
     }
 }
