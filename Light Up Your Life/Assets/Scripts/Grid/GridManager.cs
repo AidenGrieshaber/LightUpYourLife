@@ -48,11 +48,11 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         tileArray = new Tile[gridWidth, gridHeight];
-        //GenerateDefaultGrid();
+        GenerateDefaultGrid();
 
 
         filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
-        LoadLevel(1, filePath);
+        //LoadLevel(1, filePath);
 
         //Debug.Log(tileArray.Length);
     }
@@ -109,6 +109,17 @@ public class GridManager : MonoBehaviour
                 Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
                 //Sets the name of each tile in the inspector
                 newTile.name = "t" + i + " " + j;
+
+                //TEMP DELETE THIS
+                if ((i == 2 && j == 2) || (i == 5 && j == 5))
+                {
+                    newTile.SetTileType(newTile, 'o');
+                }
+                else
+                {
+                    newTile.SetTileType(newTile, '-');
+                }
+
 
                 //This bool determines whether or not this tile is an even or odd tile in order
                 //To change its color
