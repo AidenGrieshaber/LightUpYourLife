@@ -17,7 +17,11 @@ public class LevelButton : MonoBehaviour
 
     private List<SpriteRenderer> starList;
 
-    public string connectedScene;
+    public int LevelID
+    {
+        get { return levelID; }
+        set { levelID = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
