@@ -1969,7 +1969,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.005, y: 0.005}
   m_EdgeRadius: 0
 --- !u!1 &1003546140
 GameObject:
@@ -2488,7 +2488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1663152940983518971, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1663152940983518971, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3589,6 +3589,10 @@ PrefabInstance:
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: LightDistance
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
+      propertyPath: tileLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

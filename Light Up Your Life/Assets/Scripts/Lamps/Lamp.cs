@@ -183,7 +183,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
         foreach (Tile t in nearTiles)
         {
-            CheckShadows(t, nearTiles);
+            Debug.Log("Checking Tile: " + t);
+            CheckShadows(t);
         }
     }
 
@@ -200,11 +201,12 @@ public class Lamp : MonoBehaviour //Lamp parent master
         gameObject.transform.position = snapLocation;
     }
 
-    private void CheckShadows(Tile cTile, List<Tile> nearTiles)
+    private void CheckShadows(Tile cTile)
     {
         Vector3 DirToLight = (this.tileOn.transform.position - cTile.transform.position).normalized;
         RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, Mathf.Infinity, ~tileLayer);
-        Debug.Log(hit.collider + " " + cTile);
+        Debug.DrawRay(cTile.transform.position, DirToLight, Color.cyan, 1000000, false);
+        Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
         if(hit.collider != null && hit.collider.tag != "Lamp")
         {
             cTile.IsLit = false;
