@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelectManager : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class LevelSelectManager : MonoBehaviour
             float horizontalAlign = (height / 6) * (-(i / 5) + 5 - height/2); 
             current.transform.position = new Vector3(vertialAlign,horizontalAlign,0);
             LevelButton button = current.GetComponent<LevelButton>();
-            button.manager = gameObject;
             button.LevelID = i + 1;
         }
     }
