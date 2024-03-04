@@ -14,6 +14,7 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private SpriteRenderer star3;
     [SerializeField] private TextMeshProUGUI number;
     [SerializeField] private int levelID;
+    [SerializeField] public GameObject manager;
 
     private List<SpriteRenderer> starList;
 
@@ -50,5 +51,6 @@ public class LevelButton : MonoBehaviour
     {
         Debug.Log("clicked");
         Singleton.Instance.SetID(levelID);
+        manager.GetComponent<SceneLoader>().StartGame();
     }
 }

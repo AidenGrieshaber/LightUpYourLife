@@ -27,6 +27,7 @@ public class LevelSelectManager : MonoBehaviour
             float horizontalAlign = (height / 6) * (-(i / 5) + 5 - height/2); 
             current.transform.position = new Vector3(vertialAlign,horizontalAlign,0);
             LevelButton button = current.GetComponent<LevelButton>();
+            button.manager = gameObject;
             button.LevelID = i + 1;
         }
     }
