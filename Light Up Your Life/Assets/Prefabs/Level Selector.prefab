@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.05835724, y: -0.0024967194}
+  m_SizeDelta: {x: -129.18, y: 0.0050011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3875758805291020137
 CanvasRenderer:
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 64.74508, y: 1.0204558, z: 64.851685, w: 1.0204525}
+  m_margin: {x: 0.19582982, y: 0.11590051, z: -0.04278373, w: 1.0204525}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -564,7 +564,7 @@ Transform:
   - {fileID: 102583485070079427}
   - {fileID: 2793742336313574023}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7995562018004480191
 SpriteRenderer:
@@ -636,7 +636,7 @@ MonoBehaviour:
   star3: {fileID: 779275757578420070}
   number: {fileID: 1957192862820366239}
   levelID: 1
-  connectedScene: 
+  sceneLoader: {fileID: 0}
 --- !u!114 &8734752114606203408
 MonoBehaviour:
   m_ObjectHideFlags: 0
