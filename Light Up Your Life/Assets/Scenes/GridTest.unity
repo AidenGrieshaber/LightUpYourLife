@@ -2544,7 +2544,7 @@ PrefabInstance:
       objectReference: {fileID: 1240006265}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: LightDistance
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6955734853855397418, guid: 264c74cca69b3a841bc9944db3a96fc3, type: 3}
       propertyPath: IgnoreLayer.m_Bits

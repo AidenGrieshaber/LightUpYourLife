@@ -41,7 +41,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     protected LampState state;
 
     [SerializeField]//serialize for now until lampmanager implemented
-    private GridManager gridManager;
+    protected GridManager gridManager;
 
     //position of this lamp on the hotbar
     public Vector3 HotbarPosition;
@@ -204,7 +204,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     private void CheckShadows(Tile cTile)
     {
         Vector3 DirToLight = (this.tileOn.transform.position - cTile.transform.position).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, Mathf.Infinity, ~tileLayer);
+        RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, LightDistance, ~tileLayer);
         Debug.DrawRay(cTile.transform.position, DirToLight, Color.cyan, 1000000, false);
         Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
         if(hit.collider != null && hit.collider.tag != "Lamp")
