@@ -36,7 +36,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
     //Point for the lamp to follow while it is held, likely the mouse or touch input
     public Vector3 anchorpoint;
 
-    protected LampState state;
+    public LampState state;
 
     [SerializeField]//serialize for now until lampmanager implemented
     private GridManager gridManager;
