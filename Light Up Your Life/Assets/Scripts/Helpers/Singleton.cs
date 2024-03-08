@@ -32,8 +32,11 @@ public class Singleton : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SetID(int id)
+    public void SetID(int idT)
     {
-        this.id = id;
+        //Debug.Log("SetID Before: " + id);
+        //Debug.Log("the id: " + idT);
+        this.id = idT;
+        //Debug.Log("SetID After: " + id);
     }
 }

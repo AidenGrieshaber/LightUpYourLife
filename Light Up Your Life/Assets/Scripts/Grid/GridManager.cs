@@ -74,11 +74,11 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         tileArray = new Tile[gridWidth, gridHeight];
-        GenerateDefaultGrid();
+        //GenerateDefaultGrid();
 
 
         filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
-        //LoadLevel(1, filePath);
+        LoadLevel(Singleton.Instance.ID, filePath);
 
         //Debug.Log(tileArray.Length);
     }
@@ -237,6 +237,9 @@ public class GridManager : MonoBehaviour
     //Uses a specified level number to load a specific level layout from a file
     public void LoadLevel(int levelNum, string filePath)
     {
+        //Debug.Log("LoadLevel GridManager: " + levelNum);
+
+
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
         //Array of tiles that make up the specified level number

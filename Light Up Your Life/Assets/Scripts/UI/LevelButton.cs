@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,13 +27,14 @@ public class LevelButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        starList = new List<SpriteRenderer>() { star1, star2, star3};
+        starList = new List<SpriteRenderer>() { star1, star2, star3 };
         LoadLevelSelect();
     }
 
     public void LoadLevelSelect()
     {
         number.text = "" + levelID;
+        LevelID = levelID;
         for (int i = 0; i < 3; i++)
         {
             if (i < stars)
@@ -44,6 +46,8 @@ public class LevelButton : MonoBehaviour
                 starList[i].color = new Color32(0x66, 0x66, 0x66, 0xFF);
             }
         }
+
+
     }
 
     public void LoadGivenScene()
