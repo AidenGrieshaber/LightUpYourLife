@@ -272,4 +272,16 @@ public class GridManager : MonoBehaviour
         mainCamera.transform.position = new Vector3((float)gridWidth / 2 - 0.5f, (float)gridHeight / 2 - 0.5f, -10);
 
     }
+    public void TriggerNextLevel()
+    {
+        if (Singleton.Instance.ID <= 15)
+        {
+            Singleton.Instance.ID = 1;
+        }
+        else
+        {
+            Singleton.Instance.ID = Singleton.Instance.ID + 1;
+        }
+        LoadLevel(Singleton.Instance.ID, filePath);
+    }
 }
