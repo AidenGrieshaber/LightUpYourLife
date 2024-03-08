@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour
     [SerializeField] public SpriteRenderer renderer;
     [SerializeField] public GameObject highlight;
     [SerializeField] public bool IsLit;
+    public bool permanentLit;
 
     protected TileType tileType;
 

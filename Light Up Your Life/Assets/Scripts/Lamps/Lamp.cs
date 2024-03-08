@@ -197,7 +197,12 @@ public class Lamp : MonoBehaviour //Lamp parent master
         {
             Debug.Log("Checking Tile: " + t);
             CheckShadows(t);
+            if(t.IsLit)
+            {
+                t.permanentLit = true;
+            }
         }
+
     }
 
     /// <summary>
@@ -240,9 +245,13 @@ public class Lamp : MonoBehaviour //Lamp parent master
         Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
         if(hit.collider != null && hit.collider.tag != "Lamp")
         {
-            cTile.IsLit = false;
-            cTile.ChangeColor(true);
-            cTile.highlight.SetActive(false);
+            if(!cTile.permanentLit)
+            {
+                cTile.IsLit = false;
+                cTile.ChangeColor(true);
+                cTile.highlight.SetActive(false);
+            }
+            
         }
 
     }

@@ -47,42 +47,9 @@ public class CircleLamp : Lamp
 
     private List<Tile> CheckLights(Tile currentTile, float count)
     {
-        ////break case
-        //if (count <= 0 || currentTile == null)
-        //{
-        //    return new List<Tile>();
-        //}
-
-        //Tile tileUp = null;
-        //Tile tileDown = null;
-        //Tile tileLeft = null;
-        //Tile tileRight = null;
-
-        //try
-        //{ tileUp = Physics2D.Raycast(currentTile.transform.position, -Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        //catch (Exception e) {  }
-
-        //try
-        //{ tileDown = Physics2D.Raycast(currentTile.transform.position, Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        //catch (Exception e) {  }
-
-        //try
-        //{ tileRight = Physics2D.Raycast(currentTile.transform.position, -Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        //catch (Exception e) {  }
-
-        //try
-        //{ tileLeft = Physics2D.Raycast(currentTile.transform.position, Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        //catch (Exception e) {  }
 
         List<Tile> tiles = new List<Tile>();
 
-        //tiles.Add(currentTile);
-
-        ////Recursively check the surrounding tiles
-        //tiles.AddRange(CheckLights(tileUp, count - 1));
-        //tiles.AddRange(CheckLights(tileDown, count - 1));
-        //tiles.AddRange(CheckLights(tileLeft, count - 1));
-        //tiles.AddRange(CheckLights(tileRight, count - 1));
         if(currentTile == null)
         {
             return tiles;
