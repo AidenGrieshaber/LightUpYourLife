@@ -50,5 +50,6 @@ public class LevelButton : MonoBehaviour
     {
         Debug.Log("clicked");
         Singleton.Instance.SetID(levelID);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
