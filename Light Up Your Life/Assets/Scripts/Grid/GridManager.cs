@@ -274,7 +274,7 @@ public class GridManager : MonoBehaviour
     }
     public void TriggerNextLevel()
     {
-        if (Singleton.Instance.ID <= 15)
+        if (Singleton.Instance.ID >= 15)
         {
             Singleton.Instance.ID = 1;
         }
