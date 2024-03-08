@@ -83,23 +83,33 @@ public class CircleLamp : Lamp
         //tiles.AddRange(CheckLights(tileDown, count - 1));
         //tiles.AddRange(CheckLights(tileLeft, count - 1));
         //tiles.AddRange(CheckLights(tileRight, count - 1));
-
-        foreach(Tile t in gridManager.TileArray)
+        if(currentTile == null)
         {
-            float distance = 0;
-            try
+            return tiles;
+        }
+        if (currentTile.TileTypeGet != TileType.Obstacle)
+        {
+            foreach (Tile t in gridManager.TileArray)
             {
-                distance = Vector2.Distance(t.transform.position, currentTile.transform.position);
+                float distance = 0;
+                try
+                {
+                    distance = Vector2.Distance(t.transform.position, currentTile.transform.position);
+                }
+                catch (Exception e) { }
+                if (Math.Ceiling(distance) < LightDistance && distance != 0 && t.TileTypeGet != TileType.Obstacle)
+                {
+                    tiles.Add(t);
+                }
+                if (t == FindNearestTile())
+                {
+                    tiles.Add(t);
+                }
             }
-            catch(Exception e) { }
-            if( Math.Ceiling(distance) < LightDistance && distance != 0 && t.TileTypeGet != TileType.Obstacle)
-            {
-                tiles.Add(t);
-            }
-            if(t == FindNearestTile())
-            {
-                tiles.Add(t);
-            }
+        }
+        else if (currentTile == null)
+        {
+            tiles.Add(FindNearestTile());
         }
         return tiles; 
     }

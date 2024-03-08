@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -66,6 +67,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             gameObject.transform.position = anchorpoint;
 
             HighlightTiles();
+            //SnapToGridCollider(FindNearestTile(),GetComponent<BoxCollider2D>());
         }
     }
 
@@ -150,7 +152,12 @@ public class Lamp : MonoBehaviour //Lamp parent master
         {
             foreach (Tile t in nearTiles)
             {
-                if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
+                
+                if(!t.IsLit && this.FindNearestTile().TileTypeGet == TileType.Obstacle)
+                {
+                    t.renderer.color = Color.red;
+                }
+                else if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
                 {
                     //Change the lit tile visually
                     t.renderer.color = Color.green;
@@ -158,6 +165,11 @@ public class Lamp : MonoBehaviour //Lamp parent master
             }
         }
 
+        foreach (Tile t in nearTiles)
+        {
+            Debug.Log("Checking Tile: " + t);
+            CheckShadows(t);
+        }
 
     }
 
@@ -201,11 +213,30 @@ public class Lamp : MonoBehaviour //Lamp parent master
         gameObject.transform.position = snapLocation;
     }
 
+    public void SnapToGridCollider(Tile nearestTile, BoxCollider2D collider)
+    {
+        tileOn = nearestTile;
+
+        Vector3 tilePos = nearestTile.gameObject.transform.position;
+        Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
+        collider.transform.position = snapLocation;
+    }
+
     private void CheckShadows(Tile cTile)
     {
-        Vector3 DirToLight = (this.tileOn.transform.position - cTile.transform.position).normalized;
+        Vector3 DirToLight;
+
+        if(this.tileOn == null)
+        {
+            DirToLight = (FindNearestTile().transform.position - cTile.transform.position).normalized;
+        }
+        else
+        {
+            DirToLight = (this.GetComponent<BoxCollider2D>().transform.position - cTile.transform.position).normalized;
+        }
+        
         RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, LightDistance, ~tileLayer);
-        Debug.DrawRay(cTile.transform.position, DirToLight, Color.cyan, 1000000, false);
+        Debug.DrawRay(this.GetComponent<BoxCollider2D>().transform.position, DirToLight, Color.cyan, 1000000, false);
         Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
         if(hit.collider != null && hit.collider.tag != "Lamp")
         {
