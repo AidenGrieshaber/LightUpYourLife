@@ -11,6 +11,7 @@ public class CircleLamp : Lamp
     private static float animationTimer = .12f;
     public LayerMask IgnoreLayer;
 
+
     protected override void Update()
     {
         //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
@@ -46,42 +47,37 @@ public class CircleLamp : Lamp
 
     private List<Tile> CheckLights(Tile currentTile, float count)
     {
-        //break case
-        if (count <= 0 || currentTile == null)
-        {
-            return new List<Tile>();
-        }
-
-        Tile tileUp = null;
-        Tile tileDown = null;
-        Tile tileLeft = null;
-        Tile tileRight = null;
-
-        try
-        { tileUp = Physics2D.Raycast(currentTile.transform.position, -Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        catch (Exception e) {  }
-
-        try
-        { tileDown = Physics2D.Raycast(currentTile.transform.position, Vector2.up, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        catch (Exception e) {  }
-
-        try
-        { tileRight = Physics2D.Raycast(currentTile.transform.position, -Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        catch (Exception e) {  }
-
-        try
-        { tileLeft = Physics2D.Raycast(currentTile.transform.position, Vector2.right, Mathf.Infinity, ~IgnoreLayer).collider.GetComponent<Tile>(); }
-        catch (Exception e) {  }
 
         List<Tile> tiles = new List<Tile>();
-        tiles.Add(currentTile);
 
-        //Recursively check the surrounding tiles
-        tiles.AddRange(CheckLights(tileUp, count - 1));
-        tiles.AddRange(CheckLights(tileDown, count - 1));
-        tiles.AddRange(CheckLights(tileLeft, count - 1));
-        tiles.AddRange(CheckLights(tileRight, count - 1));
-
+        if(currentTile == null)
+        {
+            return tiles;
+        }
+        if (currentTile.TileTypeGet != TileType.Obstacle)
+        {
+            foreach (Tile t in gridManager.TileArray)
+            {
+                float distance = 0;
+                try
+                {
+                    distance = Vector2.Distance(t.transform.position, currentTile.transform.position);
+                }
+                catch (Exception e) { }
+                if (Math.Ceiling(distance) < LightDistance && distance != 0 && t.TileTypeGet != TileType.Obstacle)
+                {
+                    tiles.Add(t);
+                }
+                if (t == FindNearestTile())
+                {
+                    tiles.Add(t);
+                }
+            }
+        }
+        else if (currentTile == null)
+        {
+            tiles.Add(FindNearestTile());
+        }
         return tiles; 
     }
 }

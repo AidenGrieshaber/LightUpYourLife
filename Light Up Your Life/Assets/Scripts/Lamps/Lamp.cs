@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -23,6 +24,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     protected List<Sprite> spriteSheet;
     [SerializeField]
     private GameObject attatchment = null;
+    [SerializeField]
+    private LayerMask tileLayer;
 
     //The tile this lamp is on
     public Tile tileOn = null;
@@ -36,10 +39,10 @@ public class Lamp : MonoBehaviour //Lamp parent master
     //Point for the lamp to follow while it is held, likely the mouse or touch input
     public Vector3 anchorpoint;
 
-    protected LampState state;
+    public LampState state;
 
     [SerializeField]//serialize for now until lampmanager implemented
-    private GridManager gridManager;
+    protected GridManager gridManager;
 
     //position of this lamp on the hotbar
     public Vector3 HotbarPosition;
@@ -64,6 +67,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             gameObject.transform.position = anchorpoint;
 
             HighlightTiles();
+            //SnapToGridCollider(FindNearestTile(),GetComponent<BoxCollider2D>());
         }
     }
 
@@ -142,17 +146,31 @@ public class Lamp : MonoBehaviour //Lamp parent master
     {
         gridManager.UnHighlightTiles();
         List<Tile> nearTiles = CheckTiles();
+
+
         if (nearTiles != null) //tiles do not need to light if the lamp isn't on the board
         {
             foreach (Tile t in nearTiles)
             {
-                if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
+                
+                if(!t.IsLit && this.FindNearestTile().TileTypeGet == TileType.Obstacle)
+                {
+                    t.renderer.color = Color.red;
+                }
+                else if (!t.IsLit && t.TileTypeGet != TileType.Obstacle)
                 {
                     //Change the lit tile visually
                     t.renderer.color = Color.green;
                 }
             }
         }
+
+        foreach (Tile t in nearTiles)
+        {
+            Debug.Log("Checking Tile: " + t);
+            CheckShadows(t);
+        }
+
     }
 
     /// <summary>
@@ -161,6 +179,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     public void LightTiles()
     {
         List<Tile> nearTiles = CheckTiles();
+
+        
         foreach (Tile t in nearTiles)
         {
             if (t.TileTypeGet != TileType.Obstacle)
@@ -172,6 +192,17 @@ public class Lamp : MonoBehaviour //Lamp parent master
             }
            
         }
+
+        foreach (Tile t in nearTiles)
+        {
+            Debug.Log("Checking Tile: " + t);
+            CheckShadows(t);
+            if(t.IsLit)
+            {
+                t.permanentLit = true;
+            }
+        }
+
     }
 
     /// <summary>
@@ -186,4 +217,44 @@ public class Lamp : MonoBehaviour //Lamp parent master
         Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
         gameObject.transform.position = snapLocation;
     }
+
+    public void SnapToGridCollider(Tile nearestTile, BoxCollider2D collider)
+    {
+        tileOn = nearestTile;
+
+        Vector3 tilePos = nearestTile.gameObject.transform.position;
+        Vector3 snapLocation = new Vector3(tilePos.x, tilePos.y, gameObject.transform.position.z); //Copy x and y of tile
+        collider.transform.position = snapLocation;
+    }
+
+    private void CheckShadows(Tile cTile)
+    {
+        Vector3 DirToLight;
+
+        if(this.tileOn == null)
+        {
+            DirToLight = (FindNearestTile().transform.position - cTile.transform.position).normalized;
+        }
+        else
+        {
+            DirToLight = (this.GetComponent<BoxCollider2D>().transform.position - cTile.transform.position).normalized;
+        }
+        
+        RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, LightDistance, ~tileLayer);
+        Debug.DrawRay(this.GetComponent<BoxCollider2D>().transform.position, DirToLight, Color.cyan, 1000000, false);
+        Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
+        if(hit.collider != null && hit.collider.tag != "Lamp")
+        {
+            if(!cTile.permanentLit)
+            {
+                cTile.IsLit = false;
+                cTile.ChangeColor(true);
+                cTile.highlight.SetActive(false);
+            }
+            
+        }
+
+    }
+
+
 }

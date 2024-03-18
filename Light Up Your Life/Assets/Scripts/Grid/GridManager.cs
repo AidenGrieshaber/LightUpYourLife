@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Windows;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
 /// <summary>
 /// Created by Chris LoSardo
@@ -23,15 +25,39 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] public TMP_Text lightCoverage;
     [SerializeField] private float lights;
+    [SerializeField] private int stars = 0;
+    [SerializeField] private int lampLit = 0;
 
     [SerializeField] public Image ProgressMask;
 
-    [SerializeField] public GameObject BStar1;
-    [SerializeField] public GameObject BStar2;
-    [SerializeField] public GameObject BStar3;
-    [SerializeField] public GameObject WStar1;
-    [SerializeField] public GameObject WStar2;
-    [SerializeField] public GameObject WStar3;
+    [SerializeField] public GameObject B3Star1;
+    [SerializeField] public GameObject B3Star2;
+    [SerializeField] public GameObject B3Star3;
+    [SerializeField] public GameObject W3Star1;
+    [SerializeField] public GameObject W3Star2;
+    [SerializeField] public GameObject W3Star3;
+
+    [SerializeField] public GameObject B2Star1;
+    [SerializeField] public GameObject B2Star2;
+    [SerializeField] public GameObject W2Star1;
+    [SerializeField] public GameObject W2Star2;
+
+    [SerializeField] public GameObject B1Star;
+    [SerializeField] public GameObject W1Star;
+
+    [SerializeField] public GameObject EndBStar1;
+    [SerializeField] public GameObject EndBStar2;
+    [SerializeField] public GameObject EndBStar3;
+    [SerializeField] public GameObject EndWStar1;
+    [SerializeField] public GameObject EndWStar2;
+    [SerializeField] public GameObject EndWStar3;
+
+    [SerializeField] public List<Lamp> LampList;
+
+    [SerializeField] public GameObject EndScreen;
+    [SerializeField] public GameObject NextLevel;
+    [SerializeField] public GameObject LevelComplete;
+    [SerializeField] public GameObject LevelFail;
 
     private Tile[,] tileArray;
 
@@ -48,11 +74,11 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         tileArray = new Tile[gridWidth, gridHeight];
-        GenerateDefaultGrid();
+        //GenerateDefaultGrid();
 
 
         filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
-        //LoadLevel(1, filePath);
+        LoadLevel(Singleton.Instance.ID, filePath);
 
         //Debug.Log(tileArray.Length);
     }
@@ -60,6 +86,16 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         lights = 0;
+        stars = 0;
+        lampLit = 0;
+
+        for (int i = 0; i < LampList.Count; i++)
+        {
+            if (LampList[i].state == LampState.Placed)
+            {
+                lampLit++;
+            }
+        }
 
         for (int i = 0; i < gridWidth; i++)
         {
@@ -76,25 +112,71 @@ public class GridManager : MonoBehaviour
 
         if(lights > 50)
         {
-            BStar1.SetActive(false);
-            WStar1.SetActive(true);
+            stars++;
+            B1Star.SetActive(false);
+            W1Star.SetActive(true);
         }
 
         if (lights > 70)
         {
-            BStar2.SetActive(false);
-            WStar2.SetActive(true);
+            stars++;
+            B2Star1.SetActive(false);
+            B2Star2.SetActive(false);
+            W2Star1.SetActive(true);
+            W2Star2.SetActive(true);
         }
 
         if (lights == 100)
         {
-            BStar3.SetActive(false);
-            WStar3.SetActive(true);
+            stars++;
+            B3Star1.SetActive(false);
+            B3Star2.SetActive(false);
+            B3Star3.SetActive(false);
+            W3Star1.SetActive(true);
+            W3Star2.SetActive(true);
+            W3Star3.SetActive(true);
         }
 
         int light = (int)lights;
 
         lightCoverage.text = light.ToString() + "%";
+
+        if (lampLit == 6 || stars == 3)
+        {
+            EndScreen.SetActive(true);
+
+            if (stars == 1)
+            {
+                EndBStar1.SetActive(false);
+                EndWStar1.SetActive(true);
+                return;
+            }
+            else if (stars == 2)
+            {
+                EndBStar1.SetActive(false);
+                EndBStar2.SetActive(false);
+                EndWStar1.SetActive(true);
+                EndWStar2.SetActive(true);
+                return;
+            }
+            else if (stars == 3)
+            {
+                EndBStar1.SetActive(false);
+                EndBStar2.SetActive(false);
+                EndBStar3.SetActive(false);
+                EndWStar1.SetActive(true);
+                EndWStar2.SetActive(true);
+                EndWStar3.SetActive(true);
+                return;
+            }
+            else
+            {
+                LevelComplete.SetActive(false);
+                LevelFail.SetActive(true);
+                NextLevel.SetActive(false);
+                return;
+            }
+        }
     }
 
     //Instantiates the tile prefab to create the grid
@@ -155,6 +237,9 @@ public class GridManager : MonoBehaviour
     //Uses a specified level number to load a specific level layout from a file
     public void LoadLevel(int levelNum, string filePath)
     {
+        //Debug.Log("LoadLevel GridManager: " + levelNum);
+
+
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
         //Array of tiles that make up the specified level number
@@ -186,5 +271,17 @@ public class GridManager : MonoBehaviour
         //Sets the position of the camera to above the created grid
         mainCamera.transform.position = new Vector3((float)gridWidth / 2 - 0.5f, (float)gridHeight / 2 - 0.5f, -10);
 
+    }
+    public void TriggerNextLevel()
+    {
+        if (Singleton.Instance.ID >= 15)
+        {
+            Singleton.Instance.ID = 1;
+        }
+        else
+        {
+            Singleton.Instance.ID = Singleton.Instance.ID + 1;
+        }
+        LoadLevel(Singleton.Instance.ID, filePath);
     }
 }
