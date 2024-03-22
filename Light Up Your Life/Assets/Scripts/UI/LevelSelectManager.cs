@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelSelectManager : MonoBehaviour
+public class LevelSelectManager : MonoBehaviour, IDataPersistance
 {
     [SerializeField]
     private int totalLevels;
@@ -11,6 +11,8 @@ public class LevelSelectManager : MonoBehaviour
     private GameObject LevelButton;
     [SerializeField]
     private Camera sceneCamera;
+
+    private int levelAt;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +32,15 @@ public class LevelSelectManager : MonoBehaviour
             LevelButton button = current.GetComponent<LevelButton>();
             button.LevelID = i + 1;
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.levelAt = data.levelAt;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.levelAt = this.levelAt;
     }
 }
