@@ -6,9 +6,11 @@ using UnityEngine;
 public class GameData
 {
     public int levelAt;
+    public List<int> stars;
 
     public GameData()
     {
-        this.levelAt = 0;
+        this.levelAt = 1;
+        stars = new List<int>();
     }
 }

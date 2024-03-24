@@ -5,35 +5,42 @@ using System.Linq;
 
 public class DataPersistenceManager : MonoBehaviour
 {
+    [Header("File Storage Config")]
+    [SerializeField]
+    private string fileName;
+
     private GameData gameData;
 
     public static DataPersistenceManager Instance {get; private set;}
 
     private List<IDataPersistance> dataPersistanceObjects;
 
+    private FileDataHandler dataHandler;
+
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Debug.LogError("More than one data persistance manager in scene");
+            Debug.LogError("More than one data persistance manager in scene (not game breaking but do take note)");
         }
         Instance = this;
     }
 
     private void Start()
     {
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistanceObjects = FindAllDataPersistenceObjects();
         LoadGame();
     }
 
-    public void NewGame()
+    public void NewGame() //This can reset the game data
     {
         this.gameData = new GameData();
     }
 
     public void LoadGame()
     {
-        //TODO: load data
+        this.gameData = dataHandler.Load();
 
         if (this.gameData == null)
         {
@@ -56,14 +63,7 @@ public class DataPersistenceManager : MonoBehaviour
             data.SaveData(ref gameData);
         }
 
-        Debug.Log("Saved data: LevelAt is = " + gameData.levelAt);
-        //TODO: save to file
-    }
-
-    private void OnApplicationQuit()
-    {
-        //TODO: check if we really want this
-        SaveGame();
+        dataHandler.Save(gameData);
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()

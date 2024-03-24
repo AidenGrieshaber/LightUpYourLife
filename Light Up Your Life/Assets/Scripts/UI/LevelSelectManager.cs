@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class LevelSelectManager : MonoBehaviour, IDataPersistance
+public class LevelSelectManager : MonoBehaviour
 {
     [SerializeField]
     private int totalLevels;
@@ -12,7 +13,6 @@ public class LevelSelectManager : MonoBehaviour, IDataPersistance
     [SerializeField]
     private Camera sceneCamera;
 
-    private int levelAt;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +31,12 @@ public class LevelSelectManager : MonoBehaviour, IDataPersistance
             current.transform.position = new Vector3(vertialAlign,horizontalAlign,0);
             LevelButton button = current.GetComponent<LevelButton>();
             button.LevelID = i + 1;
+
+            if (Singleton.Instance.LevelAt <= i)//disable buttons to locked levels
+            {
+                Button interactable = current.GetComponent<Button>();
+                interactable.interactable = false; //This sets the button to a disabled state
+            }
         }
-    }
-
-    public void LoadData(GameData data)
-    {
-        this.levelAt = data.levelAt;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.levelAt = this.levelAt;
     }
 }

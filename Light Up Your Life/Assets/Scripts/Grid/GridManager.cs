@@ -274,13 +274,18 @@ public class GridManager : MonoBehaviour
     }
     public void TriggerNextLevel()
     {
+        //Set progress data to the next level
+        if (Singleton.Instance.ID + 1 > Singleton.Instance.LevelAt)
+            Singleton.Instance.LevelAt = Singleton.Instance.ID + 1;
+        DataPersistenceManager.Instance.SaveGame();
+
         if (Singleton.Instance.ID >= 15)
         {
             Singleton.Instance.ID = 1;
         }
         else
         {
-            Singleton.Instance.ID = Singleton.Instance.ID + 1;
+            Singleton.Instance.ID ++;
         }
         LoadLevel(Singleton.Instance.ID, filePath);
     }

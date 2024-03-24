@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public class Singleton : MonoBehaviour, IDataPersistance
 {
     public static Singleton Instance { get; private set; }
 
-    [HideInInspector]
+    //[HideInInspector]
     private int id;
+    [SerializeField]
+    private int levelAt;
 
     public int ID
     {
         get { return id; }
         set { id = value; }
+    }
+
+    public int LevelAt
+    {
+        get { return levelAt; }
+        set { levelAt = value; }
     }
 
     private void Awake()
@@ -38,5 +46,15 @@ public class Singleton : MonoBehaviour
         //Debug.Log("the id: " + idT);
         this.id = idT;
         //Debug.Log("SetID After: " + id);
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.levelAt = data.levelAt;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.levelAt = this.levelAt;
     }
 }

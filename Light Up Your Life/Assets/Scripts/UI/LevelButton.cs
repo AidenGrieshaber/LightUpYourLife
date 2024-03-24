@@ -46,8 +46,6 @@ public class LevelButton : MonoBehaviour
                 starList[i].color = new Color32(0x66, 0x66, 0x66, 0xFF);
             }
         }
-
-
     }
 
     public void LoadGivenScene()
