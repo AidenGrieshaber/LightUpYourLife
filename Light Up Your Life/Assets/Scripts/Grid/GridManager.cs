@@ -121,7 +121,8 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        ProgressMask.fillAmount = (int)(lights / 100);
+        ProgressMask.fillAmount = (float)(lights / 100);
+        Debug.Log(ProgressMask.fillAmount);
 
         if(lights >= 50)
         {
