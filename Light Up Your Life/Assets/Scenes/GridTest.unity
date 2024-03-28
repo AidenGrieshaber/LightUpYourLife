@@ -2850,7 +2850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &972285153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4912,6 +4912,7 @@ MonoBehaviour:
   NextLevel: {fileID: 1892925181}
   LevelComplete: {fileID: 1772368396}
   LevelFail: {fileID: 1164199215}
+  numTiles: 0
 --- !u!4 &1599658551
 Transform:
   m_ObjectHideFlags: 0

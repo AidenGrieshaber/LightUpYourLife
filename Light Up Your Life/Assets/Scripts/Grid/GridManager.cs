@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject gridTiles;
 
     [SerializeField] public TMP_Text lightCoverage;
-    [SerializeField] private float lights;
+    [SerializeField] private double lights;
     [SerializeField] private int stars = 0;
     [SerializeField] private int lampLit = 0;
 
@@ -59,6 +59,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] public GameObject LevelComplete;
     [SerializeField] public GameObject LevelFail;
 
+    public double numTiles;
+
     private Tile[,] tileArray;
 
     private string filePath;
@@ -80,6 +82,17 @@ public class GridManager : MonoBehaviour
         filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
         LoadLevel(Singleton.Instance.ID, filePath);
 
+
+        for (int i = 0; i < gridWidth; i++)
+        {
+            for (int j = 0; j < gridHeight; j++)
+            {
+                if (tileArray[i, j].TileTypeGet == TileType.Tile)
+                {
+                    numTiles++;
+                }
+            }
+        }
         //Debug.Log(tileArray.Length);
     }
 
@@ -103,21 +116,21 @@ public class GridManager : MonoBehaviour
             {
                 if (tileArray[i, j].IsLit == true)
                 {
-                    lights += 100 / (gridWidth * gridHeight);
+                    lights += 100 / numTiles;
                 }
             }
         }
 
-        ProgressMask.fillAmount = lights / 100;
+        ProgressMask.fillAmount = (int)(lights / 100);
 
-        if(lights > 50)
+        if(lights >= 50)
         {
             stars++;
             B1Star.SetActive(false);
             W1Star.SetActive(true);
         }
 
-        if (lights > 70)
+        if (lights >= 70)
         {
             stars++;
             B2Star1.SetActive(false);
