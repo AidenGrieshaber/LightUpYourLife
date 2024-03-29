@@ -59,6 +59,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] public GameObject LevelComplete;
     [SerializeField] public GameObject LevelFail;
 
+    private int currentLevel = 0;
+
     public double numTiles;
 
     private Tile[,] tileArray;
@@ -122,7 +124,6 @@ public class GridManager : MonoBehaviour
         }
 
         ProgressMask.fillAmount = (float)(lights / 100);
-        Debug.Log(ProgressMask.fillAmount);
 
         if(lights >= 50)
         {
@@ -155,9 +156,10 @@ public class GridManager : MonoBehaviour
 
         lightCoverage.text = light.ToString() + "%";
 
-        if (lampLit == 6 || stars == 3)
+        if (lampLit == 6 || stars == 3) //TODO: we really need to change how this is done
         {
             EndScreen.SetActive(true);
+            Singleton.Instance.SetStars(stars, currentLevel);
 
             if (stars == 1)
             {
@@ -252,7 +254,7 @@ public class GridManager : MonoBehaviour
     public void LoadLevel(int levelNum, string filePath)
     {
         //Debug.Log("LoadLevel GridManager: " + levelNum);
-
+        currentLevel = levelNum; //used for setting stars later
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
