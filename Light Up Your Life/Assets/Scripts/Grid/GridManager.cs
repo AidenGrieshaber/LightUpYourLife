@@ -140,7 +140,7 @@ public class GridManager : MonoBehaviour
             W2Star2.SetActive(true);
         }
 
-        if (lights == 100)
+        if (lights >= 99)
         {
             stars++;
             B3Star1.SetActive(false);
