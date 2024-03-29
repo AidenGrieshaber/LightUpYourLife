@@ -38,4 +38,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+
+    public void ResetGame()//Resets save data, used by the button on main menu
+    {
+        DataPersistenceManager.Instance.ResetSaveData();
+    }
 }

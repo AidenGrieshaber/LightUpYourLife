@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -33,6 +34,7 @@ public class Singleton : MonoBehaviour, IDataPersistance
         if (Instance != null && Instance != this)
         {
             Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -61,6 +63,16 @@ public class Singleton : MonoBehaviour, IDataPersistance
             if (levelStars[level-1] < count)
                 levelStars[level-1] = count;
         }
+    }
+
+    public int GetStars(int level)//get stars for given level, default 0
+    {
+        if (levelStars.Count >= level)
+        {
+            Console.Out.WriteLine(level);
+            return levelStars[level-1];
+        }
+        return 0;
     }
 
     public void LoadData(GameData data)

@@ -31,6 +31,17 @@ public class LevelButton : MonoBehaviour
         LoadLevelSelect();
     }
 
+    void Update()
+    {
+        if (stars > 0)
+        {
+            for (int i = 0; i < stars; i++)
+            {
+                starList[i].color = Color.white;
+            }
+        }
+    }
+
     public void LoadLevelSelect()
     {
         number.text = "" + levelID;
@@ -53,5 +64,10 @@ public class LevelButton : MonoBehaviour
         Debug.Log("clicked");
         Singleton.Instance.SetID(levelID);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void SetStars(int amount)
+    {
+        stars = amount;
     }
 }

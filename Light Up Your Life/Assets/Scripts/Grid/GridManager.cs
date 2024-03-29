@@ -159,7 +159,14 @@ public class GridManager : MonoBehaviour
         if (lampLit == 6 || stars == 3) //TODO: we really need to change how this is done
         {
             EndScreen.SetActive(true);
-            Singleton.Instance.SetStars(stars, currentLevel);
+            if (stars > 0)
+            {
+                //Set progress data to the next level, and save the star count
+                Singleton.Instance.SetStars(stars, currentLevel);
+                if (Singleton.Instance.ID + 1 > Singleton.Instance.LevelAt)
+                    Singleton.Instance.LevelAt = Singleton.Instance.ID + 1;
+                DataPersistenceManager.Instance.SaveGame();
+            }
 
             if (stars == 1)
             {
@@ -290,11 +297,6 @@ public class GridManager : MonoBehaviour
     }
     public void TriggerNextLevel()
     {
-        //Set progress data to the next level
-        if (Singleton.Instance.ID + 1 > Singleton.Instance.LevelAt)
-            Singleton.Instance.LevelAt = Singleton.Instance.ID + 1;
-        DataPersistenceManager.Instance.SaveGame();
-
         if (Singleton.Instance.ID >= 15)
         {
             Singleton.Instance.ID = 1;
