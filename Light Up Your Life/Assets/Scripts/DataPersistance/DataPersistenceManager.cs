@@ -9,6 +9,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField]
     private string fileName;
 
+    [SerializeField]
     private GameData gameData;
 
     public static DataPersistenceManager Instance {get; private set;}
@@ -64,6 +65,15 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         dataHandler.Save(gameData);
+    }
+
+    public void ResetSaveData()
+    {
+        gameData.levelAt = 1;
+        gameData.levelStars = new List<int>();
+        dataHandler.Save(gameData);
+        dataHandler.Load();
+        LoadGame();
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()

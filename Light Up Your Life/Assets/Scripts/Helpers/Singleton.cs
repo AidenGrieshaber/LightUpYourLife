@@ -12,6 +12,8 @@ public class Singleton : MonoBehaviour, IDataPersistance
     [SerializeField]
     private int levelAt;
 
+    private List<int> levelStars;
+
     public int ID
     {
         get { return id; }
@@ -51,10 +53,12 @@ public class Singleton : MonoBehaviour, IDataPersistance
     public void LoadData(GameData data)
     {
         this.levelAt = data.levelAt;
+        this.levelStars = data.levelStars;
     }
 
     public void SaveData(ref GameData data)
     {
         data.levelAt = this.levelAt;
+        data.levelStars = this.levelStars;
     }
 }
