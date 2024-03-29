@@ -82,7 +82,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
         }
     }
 
-    private void OnMouseUp()
+    protected void OnMouseUp()
     {
         if (state == LampState.Held)
         {
