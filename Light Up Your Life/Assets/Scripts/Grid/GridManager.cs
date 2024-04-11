@@ -23,41 +23,41 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject gridTiles;
 
-    [SerializeField] public TMP_Text lightCoverage;
+    [SerializeField] private TMP_Text lightCoverage;
     [SerializeField] private double lights;
     [SerializeField] private int stars = 0;
     [SerializeField] private int lampLit = 0;
 
-    [SerializeField] public Image ProgressMask;
+    [SerializeField] private Image ProgressMask;
 
-    [SerializeField] public GameObject B3Star1;
-    [SerializeField] public GameObject B3Star2;
-    [SerializeField] public GameObject B3Star3;
-    [SerializeField] public GameObject W3Star1;
-    [SerializeField] public GameObject W3Star2;
-    [SerializeField] public GameObject W3Star3;
+    [SerializeField] private GameObject B3Star1;
+    [SerializeField] private GameObject B3Star2;
+    [SerializeField] private GameObject B3Star3;
+    [SerializeField] private GameObject W3Star1;
+    [SerializeField] private GameObject W3Star2;
+    [SerializeField] private GameObject W3Star3;
 
-    [SerializeField] public GameObject B2Star1;
-    [SerializeField] public GameObject B2Star2;
-    [SerializeField] public GameObject W2Star1;
-    [SerializeField] public GameObject W2Star2;
+    [SerializeField] private GameObject B2Star1;
+    [SerializeField] private GameObject B2Star2;
+    [SerializeField] private GameObject W2Star1;
+    [SerializeField] private GameObject W2Star2;
 
-    [SerializeField] public GameObject B1Star;
-    [SerializeField] public GameObject W1Star;
+    [SerializeField] private GameObject B1Star;
+    [SerializeField] private GameObject W1Star;
 
-    [SerializeField] public GameObject EndBStar1;
-    [SerializeField] public GameObject EndBStar2;
-    [SerializeField] public GameObject EndBStar3;
-    [SerializeField] public GameObject EndWStar1;
-    [SerializeField] public GameObject EndWStar2;
-    [SerializeField] public GameObject EndWStar3;
+    [SerializeField] private GameObject EndBStar1;
+    [SerializeField] private GameObject EndBStar2;
+    [SerializeField] private GameObject EndBStar3;
+    [SerializeField] private GameObject EndWStar1;
+    [SerializeField] private GameObject EndWStar2;
+    [SerializeField] private GameObject EndWStar3;
 
-    [SerializeField] public List<Lamp> LampList;
+    [SerializeField] private List<Lamp> LampList;
 
-    [SerializeField] public GameObject EndScreen;
-    [SerializeField] public GameObject NextLevel;
-    [SerializeField] public GameObject LevelComplete;
-    [SerializeField] public GameObject LevelFail;
+    [SerializeField] private GameObject EndScreen;
+    [SerializeField] private GameObject NextLevel;
+    [SerializeField] private GameObject LevelComplete;
+    [SerializeField] private GameObject LevelFail;
 
     private int currentLevel = 0;
 
@@ -66,6 +66,8 @@ public class GridManager : MonoBehaviour
     private Tile[,] tileArray;
 
     private string filePath;
+
+    private string[] levelRows;
 
     public Tile[,] TileArray
     {
@@ -80,9 +82,17 @@ public class GridManager : MonoBehaviour
         tileArray = new Tile[gridWidth, gridHeight];
         //GenerateDefaultGrid();
 
+        int levelNum = Singleton.Instance.ID;
+
 
         filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
-        LoadLevel(Singleton.Instance.ID, filePath);
+
+        //Index of each level
+        string[] levelIndex = System.IO.File.ReadAllLines(filePath);
+        //Array of tiles that make up the specified level number
+        levelRows = levelIndex[levelNum - 1].Split(',');
+
+        LoadLevel(levelRows);
 
 
         for (int i = 0; i < gridWidth; i++)
@@ -258,22 +268,33 @@ public class GridManager : MonoBehaviour
     }
 
     //Uses a specified level number to load a specific level layout from a file
-    public void LoadLevel(int levelNum, string filePath)
+    public void LoadLevel(string[] splitFile)
     {
-        //Debug.Log("LoadLevel GridManager: " + levelNum);
-        currentLevel = levelNum; //used for setting stars later
+        ////Debug.Log("LoadLevel GridManager: " + levelNum);
+        //currentLevel = levelNum; //used for setting stars later
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
         //Array of tiles that make up the specified level number
-        string[] levelRows = levelIndex[levelNum - 1].Split(',');
+        string[] levelRows = splitFile;
+
+
+        Debug.Log("LevelRows[0]: " + levelRows[0]);
+        
+        //Parse Lamp Data
+
+        //Parse Star Data
 
         //Determines the width of the grid
         for (int i = 0; i < levelRows.Length; i++)
         {
+
             //Determines the height of the grid
             for (int j = 0; j < levelRows[0].Length; j++)
             {
+
+                
+
                 Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
                 //Sets the type of the tile (Tile, Obstacle, etc.) based on the character stored in levelRows[i][j]
                 newTile.SetTileType(newTile, levelRows[i][j]);
@@ -305,6 +326,20 @@ public class GridManager : MonoBehaviour
         {
             Singleton.Instance.ID ++;
         }
-        LoadLevel(Singleton.Instance.ID, filePath);
+        LoadLevel(levelRows);
     }
+
+
+    public void ParseLampData(string levelRows0)
+    { 
+    
+
+
+    }
+    
+    public void ParseStarData(string levelRows1)
+    { 
+    
+    }
+
 }
