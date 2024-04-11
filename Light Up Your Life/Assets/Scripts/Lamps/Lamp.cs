@@ -16,14 +16,12 @@ public enum LampState
 
 public class Lamp : MonoBehaviour //Lamp parent master
 {
-    [SerializeField] //Scale for the range of the light in tiles
-    public float LightDistance = 1;
-    [SerializeField]
+    //Scale for the range of the light in tiles
+    public float lightDistance = 1;
     private LampManager lampManager;
     [SerializeField]
     protected List<Sprite> spriteSheet;
-    [SerializeField]
-    private GameObject attatchment = null;
+    private GameObject attachment = null;
     [SerializeField]
     private LayerMask tileLayer;
 
@@ -41,8 +39,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
     public LampState state;
 
-    [SerializeField]//serialize for now until lampmanager implemented
-    protected GridManager gridManager;
+    //serialize for now until lampmanager implemented
+    public GridManager gridManager;
 
     //position of this lamp on the hotbar
     public Vector3 HotbarPosition;
@@ -54,7 +52,10 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
         state = LampState.Hotbar;
         anchorpoint = Vector3.zero; //This shoule not still be zero by the time it is used
-        gridManager = lampManager.GetGridManager();
+
+        lampManager = GetComponent<LampManager>();
+
+       // attachment = lampManager.AttachmentGet;
     }
 
     // Update is called once per frame
@@ -71,14 +72,22 @@ public class Lamp : MonoBehaviour //Lamp parent master
         }
     }
 
+    public float LightDistance
+    {
+        get
+        {
+            return lightDistance;
+        }
+        set { lightDistance = value; }
+    }
     private void OnMouseDown()
     {
         if (state == LampState.Hotbar || state == LampState.None)
         {
             state = LampState.Held;
 
-            if (attatchment != null)
-                attatchment.SetActive(false);
+            if (attachment != null)
+                attachment.SetActive(false);
         }
     }
 

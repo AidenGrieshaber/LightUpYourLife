@@ -99,9 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightDistance: 3
-  lampManager: {fileID: 0}
   spriteSheet: []
-  attatchment: {fileID: 0}
   tileLayer:
     serializedVersion: 2
     m_Bits: 64
