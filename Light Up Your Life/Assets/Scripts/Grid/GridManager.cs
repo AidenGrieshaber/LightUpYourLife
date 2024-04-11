@@ -91,6 +91,8 @@ public class GridManager : MonoBehaviour
             {
                 if (tileArray[i, j].TileTypeGet == TileType.Tile)
                 {
+                    tileArray[i, j].posX = i;
+                    tileArray[i, j].posY = j;
                     numTiles++;
                 }
             }
