@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject lampDockBackground;
 
     [SerializeField] private TMP_Text lightCoverage;
+    [SerializeField] private TMP_Text finalScore;
     [SerializeField] private double lights;
     [SerializeField] private int stars = 0;
     [SerializeField] private int lampLit = 0;
@@ -211,6 +212,9 @@ public class GridManager : MonoBehaviour
         if (lampLit == lampList.Count || stars == 3) 
         {
             EndScreen.SetActive(true);
+
+            finalScore.text = "Light Coverage: " + light.ToString() + "%";
+
             if (stars > 0)
             {
                 //Set progress data to the next level, and save the star count
