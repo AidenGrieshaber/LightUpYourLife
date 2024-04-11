@@ -2192,8 +2192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 26.9}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 27.7}
+  m_SizeDelta: {x: 340.39966, y: 29.94293}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &638946336
 MonoBehaviour:
@@ -4879,7 +4879,7 @@ MonoBehaviour:
   mainCamera: {fileID: 625576909}
   gridTiles: {fileID: 2109256057}
   lightCoverage: {fileID: 1011730863}
-  finalScore: {fileID: 0}
+  finalScore: {fileID: 638946336}
   lights: 0
   stars: 0
   lampLit: 0
