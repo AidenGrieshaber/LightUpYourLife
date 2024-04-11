@@ -46,14 +46,14 @@ public class WallLamp : Lamp //IGNORE THIS CLASS FOR NOW
                     distance = Vector2.Distance(t.transform.position, currentTile.transform.position);
                 }
                 catch (Exception e) { }
-                if (Math.Ceiling(distance) == 1 && t.TileTypeGet == TileType.Obstacle)
+                if (Math.Ceiling(distance) == 1 && t.TileTypeGet != TileType.Obstacle)
                 {
                     walls.Add(t);
                 }
                 
             }
 
-            if(walls.Count > 0)
+            if(walls.Count < 4)
             {
                 onWall = true;
             }

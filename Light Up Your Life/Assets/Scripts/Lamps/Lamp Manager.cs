@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LampManager : MonoBehaviour
 {
-    [SerializeField]
     private List<Lamp> lamps;
     [SerializeField]
     private GridManager gridManager;
+    [SerializeField]
+    private GameObject attachment;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,30 @@ public class LampManager : MonoBehaviour
         
     }
 
-    public GridManager GetGridManager() => gridManager;
+    public List<Lamp> LampsGet
+    {
+        get
+        {
+            return lamps;
+        }
+    }
+    public GameObject AttachmentGet
+    {
+        get
+        {
+            return attachment;
+        }
+    }
+
+    public GridManager GetGridManager
+    {
+        get
+        {
+            return gridManager;
+        }
+    }
+
+
 
     public void AllLampsLightTiles()
     {

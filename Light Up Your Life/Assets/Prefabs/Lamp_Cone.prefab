@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1663152940983518971}
   - component: {fileID: 194436667431156344}
-  - component: {fileID: 6081491547769852365}
+  - component: {fileID: 8094793055545979616}
   - component: {fileID: -5805553762326176515}
   m_Layer: 0
-  m_Name: Lamp_Square
+  m_Name: Lamp_Cone
   m_TagString: Lamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6081491547769852365
+--- !u!114 &8094793055545979616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,10 +95,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2545840438243685130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e11d29c11f71944081869d1a750bc80, type: 3}
+  m_Script: {fileID: 11500000, guid: 77434a932f8aa7040a100b267a8897d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightDistance: 3
+  LightDistance: 2
   spriteSheet: []
   tileLayer:
     serializedVersion: 2
@@ -112,7 +112,7 @@ MonoBehaviour:
   HotbarPosition: {x: 0, y: 0, z: 0}
   IgnoreLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!61 &-5805553762326176515
 BoxCollider2D:
   m_ObjectHideFlags: 0
