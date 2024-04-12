@@ -165,13 +165,16 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < gridWidth; i++)
+        if (tileArray != null)
         {
-            for (int j = 0; j < gridHeight; j++)
+            for (int i = 0; i < gridWidth; i++)
             {
-                if (tileArray[i, j].IsLit == true)
+                for (int j = 0; j < gridHeight; j++)
                 {
-                    lights += 100 / numTiles;
+                    if (tileArray[i, j].IsLit == true)
+                    {
+                        lights += 100 / numTiles;
+                    }
                 }
             }
         }
@@ -272,7 +275,7 @@ public class GridManager : MonoBehaviour
                 bool isOffset = (i + j) % 2 == 1; //my way of checking this is more epic than Chris's
 
 
-                Debug.Log(tileArray);
+                //Debug.Log(tileArray);
 
                 if (!tileArray[i, j].IsLit)
                     tileArray[i, j].ChangeColor(isOffset);
@@ -284,10 +287,8 @@ public class GridManager : MonoBehaviour
     public void LoadLevel(List<string> levelRows)
     {
         ////Debug.Log("LoadLevel GridManager: " + levelNum);
-        //currentLevel = levelNum; //used for setting stars later
 
         string[] levelTiles = new string[levelRows.Count];
-
 
         //Array of tiles that make up the specified level number
 
@@ -296,7 +297,8 @@ public class GridManager : MonoBehaviour
             levelTiles[l] = levelRows[l];
         }
 
-
+        TriggerNextLevel();
+        currentLevel = Singleton.Instance.ID; //used for setting stars later
 
         //Debug.Log("LevelRows[0]: " + levelTiles[0]);
 

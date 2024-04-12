@@ -60,6 +60,7 @@ public class Singleton : MonoBehaviour, IDataPersistance
         }
         else //Replace old entry if better stars
         {
+            Debug.Log(level);
             if (levelStars[level-1] < count)
                 levelStars[level-1] = count;
         }
