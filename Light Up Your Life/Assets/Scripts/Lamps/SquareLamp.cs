@@ -9,6 +9,27 @@ public class SquareLamp : Lamp //IGNORE THIS CLASS FOR NOW
     private float counter = 0;
     private static float animationTimer = .12f;
     public LayerMask IgnoreLayer;
+
+    protected override void Update()
+    {
+        //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
+        if (state == LampState.Placed)
+        {
+            counter += Time.deltaTime;
+            if (counter > animationTimer)
+            {
+                counter = 0;
+                frame++;
+                if (frame > 5)
+                {
+                    frame = 3;
+                }
+            }
+            gameObject.GetComponent<SpriteRenderer>().sprite = spriteSheet[frame];
+        }
+        base.Update();
+    }
+
     protected override List<Tile> CheckTiles()
     {
         if (tileOn == null) //use tileOn if on a tile, calculate nearest otherwise

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f25849d3547d0584e837db54f09bbe50
+guid: ffd1fa8bec4904b4482c0598fd527644
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WallLamp_0
+      name: Lamp_Circle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97792139ba822f049a38634363bfd130
-      internalID: -940154075
+      spriteID: 823b192ef803bbd429e3ecf56933442c
+      internalID: 1272946723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallLamp_1
+      name: Lamp_Circle_1
       rect:
         serializedVersion: 2
         x: 0
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa0dd7eb2e8ba37498111fca9abc0773
-      internalID: -589218531
+      spriteID: 1bb081dcc8ffa744eaffff618c43c003
+      internalID: 53192127
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallLamp_2
+      name: Lamp_Circle_2
       rect:
         serializedVersion: 2
         x: 0
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ecf9bc83916465469c763c4e448e646
-      internalID: -1188301299
+      spriteID: a23a403f7ac7b734e88c6a6077d810af
+      internalID: -548405644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallLamp_3
+      name: Lamp_Circle_3
       rect:
         serializedVersion: 2
         x: 0
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97db82ab0e3f8d64398b67292e7783af
-      internalID: -460726392
+      spriteID: 82afac59cf73aca46a456e39c792c702
+      internalID: -1803235162
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallLamp_4
+      name: Lamp_Circle_4
       rect:
         serializedVersion: 2
         x: 0
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ce055c2160cf0f42a157bb194583933
-      internalID: -1089401675
+      spriteID: 167bf8e7e92d0e749be3d3ed20d8e728
+      internalID: 1747528340
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallLamp_5
+      name: Lamp_Circle_5
       rect:
         serializedVersion: 2
         x: 0
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ea1f54e4c901d04ea461005f170a314
-      internalID: 416163959
+      spriteID: f3139dc3911818542b976a70b57e9f40
+      internalID: 983644299
       vertices: []
       indices: 
       edges: []
@@ -246,12 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WallLamp_0: -940154075
-      WallLamp_1: -589218531
-      WallLamp_2: -1188301299
-      WallLamp_3: -460726392
-      WallLamp_4: -1089401675
-      WallLamp_5: 416163959
+      Lamp_Circle_0: 1272946723
+      Lamp_Circle_1: 53192127
+      Lamp_Circle_2: -548405644
+      Lamp_Circle_3: -1803235162
+      Lamp_Circle_4: 1747528340
+      Lamp_Circle_5: 983644299
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
