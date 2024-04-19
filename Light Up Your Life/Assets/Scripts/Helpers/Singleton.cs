@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,6 +12,8 @@ public class Singleton : MonoBehaviour, IDataPersistance
     private int id;
     [SerializeField]
     private int levelAt;
+
+    private List<int> levelStars;
 
     public int ID
     {
@@ -31,6 +34,7 @@ public class Singleton : MonoBehaviour, IDataPersistance
         if (Instance != null && Instance != this)
         {
             Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -48,13 +52,38 @@ public class Singleton : MonoBehaviour, IDataPersistance
         //Debug.Log("SetID After: " + id);
     }
 
+    public void SetStars(int count, int level)
+    {
+        if (levelStars.Count < level)//add a new entry if this level is not on the list yet (it is next new level)
+        {
+            levelStars.Add(count);
+        }
+        else //Replace old entry if better stars
+        {
+            if (levelStars[level-1] < count)
+                levelStars[level-1] = count;
+        }
+    }
+
+    public int GetStars(int level)//get stars for given level, default 0
+    {
+        if (levelStars.Count >= level)
+        {
+            Console.Out.WriteLine(level);
+            return levelStars[level-1];
+        }
+        return 0;
+    }
+
     public void LoadData(GameData data)
     {
         this.levelAt = data.levelAt;
+        this.levelStars = data.levelStars;
     }
 
     public void SaveData(ref GameData data)
     {
         data.levelAt = this.levelAt;
+        data.levelStars = this.levelStars;
     }
 }

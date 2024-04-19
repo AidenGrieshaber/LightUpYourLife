@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1663152940983518971}
   - component: {fileID: 194436667431156344}
-  - component: {fileID: 6955734853855397418}
+  - component: {fileID: 8094793055545979616}
   - component: {fileID: -5805553762326176515}
   m_Layer: 0
-  m_Name: Lamp_Circle
+  m_Name: Lamp_Cone
   m_TagString: Lamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6955734853855397418
+--- !u!114 &8094793055545979616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2545840438243685130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33238445b984e147920468d377014bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 77434a932f8aa7040a100b267a8897d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightDistance: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
   - {fileID: -548405644, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
   - {fileID: -1803235162, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
   - {fileID: 1747528340, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: 983644299, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
+  - {fileID: 0}
   tileLayer:
     serializedVersion: 2
     m_Bits: 64

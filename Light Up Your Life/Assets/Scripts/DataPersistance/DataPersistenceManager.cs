@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField]
     private string fileName;
 
+    [SerializeField]
     private GameData gameData;
 
     public static DataPersistenceManager Instance {get; private set;}
@@ -19,11 +21,17 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Debug.LogError("More than one data persistance manager in scene (not game breaking but do take note)");
+            Destroy(this);
+            Destroy(gameObject);
         }
-        Instance = this;
+        else
+        {
+            Instance = this;
+        }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -31,6 +39,7 @@ public class DataPersistenceManager : MonoBehaviour
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistanceObjects = FindAllDataPersistenceObjects();
         LoadGame();
+        Console.WriteLine("trigger");
     }
 
     public void NewGame() //This can reset the game data
@@ -64,6 +73,15 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         dataHandler.Save(gameData);
+    }
+
+    public void ResetSaveData()
+    {
+        gameData.levelAt = 1;
+        gameData.levelStars = new List<int>();
+        dataHandler.Save(gameData);
+        dataHandler.Load();
+        LoadGame();
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()

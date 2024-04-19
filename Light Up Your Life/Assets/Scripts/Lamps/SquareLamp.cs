@@ -1,27 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SquareLamp : Lamp //IGNORE THIS CLASS FOR NOW
 {
+    private short frame = 0;
+    private float counter = 0;
+    private static float animationTimer = .12f;
+    public LayerMask IgnoreLayer;
+
+    protected override void Update()
+    {
+        //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
+        if (state == LampState.Placed)
+        {
+            counter += Time.deltaTime;
+            if (counter > animationTimer)
+            {
+                counter = 0;
+                frame++;
+                if (frame > 5)
+                {
+                    frame = 3;
+                }
+            }
+            gameObject.GetComponent<SpriteRenderer>().sprite = spriteSheet[frame];
+        }
+        base.Update();
+    }
+
     protected override List<Tile> CheckTiles()
     {
-        if (tileOn == null)
-            return null;
-
-        float scaledDistance = LightDistance * TileSize;
-        
-        //TODO: use tile coords from tile once that is implemented
-        Vector2 tileCoord = Vector2.zero;
-
-        for (float i = tileCoord.x - LightDistance; i < tileCoord.x + LightDistance; i++)
+        if (tileOn == null) //use tileOn if on a tile, calculate nearest otherwise
+            return CheckLights(FindNearestTile(), LightDistance);
+        else
         {
-            for (float j = tileCoord.y - LightDistance; j < tileCoord.y + LightDistance; j++)
+            Tile nearest = FindNearestTile();
+            if (nearest != null)
+                return CheckLights(tileOn, LightDistance);
+            return null;
+        }
+    }
+
+    private List<Tile> CheckLights(Tile currentTile, float count)
+    {
+
+        List<Tile> tiles = new List<Tile>();
+
+        if (currentTile == null)
+        {
+            return tiles;
+        }
+        if (currentTile.TileTypeGet != TileType.Obstacle)
+        {
+            foreach (Tile t in gridManager.TileArray)
             {
-                //Tiles at each of these locations are lit if a line can be drawn to them
+                float distance = 0;
+                try
+                {
+                    distance = Vector2.Distance(t.transform.position, currentTile.transform.position);
+                }
+                catch (Exception e) { }
+                if (Math.Floor(distance) <= LightDistance && distance != 0 && t.TileTypeGet != TileType.Obstacle)
+                {
+                    tiles.Add(t);
+                }
+                if (t == FindNearestTile())
+                {
+                    tiles.Add(t);
+                }
             }
         }
-
-        return null;
+        else if (currentTile == null)
+        {
+            tiles.Add(FindNearestTile());
+        }
+        return tiles;
     }
 }

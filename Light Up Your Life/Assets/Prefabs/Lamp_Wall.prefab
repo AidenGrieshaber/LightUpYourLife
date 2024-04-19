@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1663152940983518971}
   - component: {fileID: 194436667431156344}
-  - component: {fileID: 6955734853855397418}
+  - component: {fileID: 4540230401737024742}
   - component: {fileID: -5805553762326176515}
   m_Layer: 0
-  m_Name: Lamp_Circle
+  m_Name: Lamp_Wall
   m_TagString: Lamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,18 +75,18 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1272946723, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
+  m_Sprite: {fileID: -940154075, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6955734853855397418
+--- !u!114 &4540230401737024742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,17 +95,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2545840438243685130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33238445b984e147920468d377014bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 93ccb0b5bd095d5429d182c44a463fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightDistance: 1
   spriteSheet:
-  - {fileID: 1272946723, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: 53192127, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: -548405644, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: -1803235162, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: 1747528340, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
-  - {fileID: 983644299, guid: ffd1fa8bec4904b4482c0598fd527644, type: 3}
+  - {fileID: -940154075, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
+  - {fileID: -589218531, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
+  - {fileID: -1188301299, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
+  - {fileID: 416163959, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
+  - {fileID: -1089401675, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
+  - {fileID: -460726392, guid: f25849d3547d0584e837db54f09bbe50, type: 3}
   tileLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -156,7 +156,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

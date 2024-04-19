@@ -31,6 +31,7 @@ public class LevelSelectManager : MonoBehaviour
             current.transform.position = new Vector3(vertialAlign,horizontalAlign,0);
             LevelButton button = current.GetComponent<LevelButton>();
             button.LevelID = i + 1;
+            button.SetStars(Singleton.Instance.GetStars(i + 1));
 
             if (Singleton.Instance.LevelAt <= i)//disable buttons to locked levels
             {
