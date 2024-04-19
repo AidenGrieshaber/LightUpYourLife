@@ -108,6 +108,7 @@ public class GridManager : MonoBehaviour
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
+        currentLevel = levelNum;
         //Array of tiles that make up the specified level number
 
 
