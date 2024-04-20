@@ -21,7 +21,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     private LampManager lampManager;
     [SerializeField]
     protected List<Sprite> spriteSheet;
-    private GameObject attachment = null;
+    [SerializeField]
+    protected GameObject attachment = null;
     [SerializeField]
     private LayerMask tileLayer;
 

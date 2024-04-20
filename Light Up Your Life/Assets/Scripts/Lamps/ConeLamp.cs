@@ -13,7 +13,7 @@ public enum Direction
     Left,
     Right
 }
-public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
+public class ConeLamp : Lamp
 {
     private short frame = 0;
     private float counter = 0;
@@ -234,5 +234,25 @@ public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
             tiles.Add(FindNearestTile());
         }
         return tiles;
+    }
+
+    public void setDir (Direction direction)
+    {
+        dir = direction;
+        switch (dir)
+        {
+            case Direction.Up:
+                attachment.transform.rotation = Quaternion.identity;
+                break;
+            case Direction.Down:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 180);
+                break;
+            case Direction.Left:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case Direction.Right:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 270);
+                break;
+        }
     }
 }
