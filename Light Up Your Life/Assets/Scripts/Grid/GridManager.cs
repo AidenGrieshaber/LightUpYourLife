@@ -108,6 +108,7 @@ public class GridManager : MonoBehaviour
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
+        currentLevel = levelNum;
         //Array of tiles that make up the specified level number
 
 
@@ -119,12 +120,12 @@ public class GridManager : MonoBehaviour
             {
                 levelDetails.Add(levelData[i]);
 
-                Debug.Log("LevelDetails " + i + ": " + levelDetails[i]);
+                //Debug.Log("LevelDetails " + i + ": " + levelDetails[i]);
             }
             else
             {
                 levelRows.Add(levelData[i]);
-                Debug.Log("levelRows " + (i - 2) + ": " + levelRows[i - 2]);
+                //Debug.Log("levelRows " + (i - 2) + ": " + levelRows[i - 2]);
 
             }
         }
@@ -268,7 +269,7 @@ public class GridManager : MonoBehaviour
                 bool isOffset = (i + j) % 2 == 1; //my way of checking this is more epic than Chris's
 
 
-                Debug.Log(tileArray);
+                //Debug.Log(tileArray);
 
                 if (!tileArray[i, j].IsLit)
                     tileArray[i, j].ChangeColor(isOffset);
