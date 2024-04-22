@@ -5,13 +5,21 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
+
+public enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
+public class ConeLamp : Lamp
 {
     private short frame = 0;
     private float counter = 0;
     private static float animationTimer = .12f;
     public LayerMask IgnoreLayer;
-
+    public Direction dir;
     protected override void Update()
     {
         //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
@@ -57,7 +65,6 @@ public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
         }
         if (currentTile.TileTypeGet != TileType.Obstacle)
         {
-
             foreach (Tile t in gridManager.TileArray)
             {
                 float distance = 0;
@@ -68,20 +75,62 @@ public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
                 catch (Exception e) { }
                 if (Math.Ceiling(distance) <= LightDistance && distance != 0 && t.TileTypeGet != TileType.Obstacle)
                 {
-                    if(t.transform.position.x > currentTile.transform.position.x)
+                    switch (dir)
                     {
-                        tiles.Add(t);
+                        case Direction.Right:
+                            if (t.transform.position.x > currentTile.transform.position.x)
+                            {
+                                tiles.Add(t);
+                            }
+                            break;
+
+                        case Direction.Left:
+                            if (t.transform.position.x < currentTile.transform.position.x)
+                            {
+                                tiles.Add(t);
+                            }
+                            break;
+
+                        case Direction.Up:
+                            if (t.transform.position.y > currentTile.transform.position.y)
+                            {
+                                tiles.Add(t);
+                            }
+                            break;
+
+                        case Direction.Down:
+                            if (t.transform.position.y < currentTile.transform.position.y)
+                            {
+                                tiles.Add(t);
+                            }
+                            break;
+                        default:
+                            break;
                     }
+                    
 
                 }
 
                 for(int i = 0; i < tiles.Count; i++)
                 {
-                    if (Math.Ceiling(tiles[i].transform.position.y) != Math.Ceiling(currentTile.transform.position.y))
+                    if(dir == Direction.Right || dir == Direction.Left)
                     {
-                        tiles.Remove(tiles[i]);
-                        i--;
+                        if (Math.Ceiling(tiles[i].transform.position.y) != Math.Ceiling(currentTile.transform.position.y))
+                        {
+                            tiles.Remove(tiles[i]);
+                            i--;
+                        }
                     }
+
+                    else
+                    {
+                        if (Math.Ceiling(tiles[i].transform.position.x) != Math.Ceiling(currentTile.transform.position.x))
+                        {
+                            tiles.Remove(tiles[i]);
+                            i--;
+                        }
+                    }
+                    
                 }
 
                 
@@ -93,29 +142,117 @@ public class ConeLamp : Lamp //IGNORE THIS CLASS FOR NOW
             }
 
             int tileCount = tiles.Count;
-            for (int i = 0; i < tileCount; i++)
-            {
-                for (int j = 0; j < i; j++)
+
+                switch (dir)
                 {
-                    try
+                    case Direction.Right:
+                    for (int i = 0; i < tileCount; i++)
                     {
-                        tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY + j + 1]);
+                        for (int j = 0; j < i; j++)
+                        {
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY + j + 1]);
+                            }
+                            catch (Exception e) { }
 
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY - j - 1]);
+                            }
+                            catch (Exception e) { }
+                        }
                     }
-                    catch (Exception e) { }
+                        break;
 
-                    try
+                    case Direction.Left:
+                    for (int i = 0; i < tileCount; i++)
                     {
-                        tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY - j - 1]);
+                        for (int j = tileCount; j > i; j--)
+                        {
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY + j - i - 1]);
+                            }
+                            catch (Exception e) { }
+
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX, (int)tiles[i].posY - j + i + 1]);
+                            }
+                            catch (Exception e) { }
+                        }
                     }
-                    catch (Exception e) { }
+                        break;
+
+                    case Direction.Up:
+                    for (int i = 0; i < tileCount; i++)
+                    {
+                        for (int j = 0; j < i; j++)
+                        {
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX + j + 1, (int)tiles[i].posY]);
+                            }
+                            catch (Exception e) { }
+
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX - j - 1, (int)tiles[i].posY]);
+                            }
+                            catch (Exception e) { }
+                        }
                     }
-            }
+                        break;
+
+                    case Direction.Down:
+                    for (int i = 0; i < tileCount; i++)
+                    {
+                        for (int j = tileCount; j > i; j--)
+                        {
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX + j - i - 1, (int)tiles[i].posY]);
+                            }
+                            catch (Exception e) { }
+
+                            try
+                            {
+                                tiles.Add(gridManager.TileArray[(int)tiles[i].posX - j + i + 1, (int)tiles[i].posY]);
+                            }
+                            catch (Exception e) { }
+                        }
+                    }
+                        break;
+
+                    default:
+                        break;           
+                }
         }
         else if (currentTile == null)
         {
             tiles.Add(FindNearestTile());
         }
         return tiles;
+    }
+
+    public void setDir (Direction direction)
+    {
+        dir = direction;
+        switch (dir)
+        {
+            case Direction.Up:
+                attachment.transform.rotation = Quaternion.identity;
+                break;
+            case Direction.Down:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 180);
+                break;
+            case Direction.Left:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case Direction.Right:
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 270);
+                break;
+        }
     }
 }

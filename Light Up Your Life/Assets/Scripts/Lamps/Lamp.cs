@@ -21,7 +21,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
     private LampManager lampManager;
     [SerializeField]
     protected List<Sprite> spriteSheet;
-    private GameObject attachment = null;
+    [SerializeField]
+    protected GameObject attachment = null;
     [SerializeField]
     private LayerMask tileLayer;
 
@@ -176,7 +177,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
         foreach (Tile t in nearTiles)
         {
-            Debug.Log("Checking Tile: " + t);
+            //Debug.Log("Checking Tile: " + t);
             CheckShadows(t);
         }
 
@@ -204,7 +205,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
         foreach (Tile t in nearTiles)
         {
-            Debug.Log("Checking Tile: " + t);
+            //Debug.Log("Checking Tile: " + t);
             CheckShadows(t);
             if(t.IsLit)
             {
@@ -251,7 +252,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
         
         RaycastHit2D hit = Physics2D.Raycast(cTile.transform.position, DirToLight, LightDistance, ~tileLayer);
         Debug.DrawRay(this.GetComponent<BoxCollider2D>().transform.position, DirToLight, Color.cyan, 1000000, false);
-        Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
+        //Debug.Log(hit.collider + " " + cTile + " " + DirToLight);
         if(hit.collider != null && hit.collider.tag != "Lamp")
         {
             if(!cTile.permanentLit)
