@@ -84,6 +84,8 @@ public class GridManager : MonoBehaviour
     private List<string> levelLamps;
     private List<int> LevelStars;
 
+    private float tileSize = 50;
+
     public Tile[,] TileArray
     {
         get
@@ -307,10 +309,20 @@ public class GridManager : MonoBehaviour
             //Determines the height of the grid
             for (int j = 0; j < levelTiles[0].Length; j++)
             {
+                float posX;
+                float posY;
+
+                Tile newTile;
+
+                tileSize = 1.0287158f;
+                posX = j * tileSize;
+                posY = i * -tileSize;
+
+                newTile = Instantiate(tileObject, new Vector3(posX, posY), Quaternion.identity, gridTiles.transform);
+
+                newTile.transform.position = new Vector2(posX + gridTiles.transform.position.x, posY + gridTiles.transform.position.y);
 
 
-
-                Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
                 //Sets the type of the tile (Tile, Obstacle, etc.) based on the character stored in levelRows[i][j]
                 newTile.SetTileType(newTile, levelTiles[i][j]);
                 //Sets the name of each tile in the inspector
