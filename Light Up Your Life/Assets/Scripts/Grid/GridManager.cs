@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject lampDockBackground;
 
     [SerializeField] private TMP_Text lightCoverage;
+    [SerializeField] private TMP_Text finalScore;
     [SerializeField] private double lights;
     [SerializeField] private int stars = 0;
     [SerializeField] private int lampLit = 0;
@@ -39,19 +40,16 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Image ProgressMask;
 
     [SerializeField] private GameObject B3Star1;
-    [SerializeField] private GameObject B3Star2;
-    [SerializeField] private GameObject B3Star3;
     [SerializeField] private GameObject W3Star1;
-    [SerializeField] private GameObject W3Star2;
-    [SerializeField] private GameObject W3Star3;
+    [SerializeField] private TMP_Text Star1Text;
 
     [SerializeField] private GameObject B2Star1;
-    [SerializeField] private GameObject B2Star2;
     [SerializeField] private GameObject W2Star1;
-    [SerializeField] private GameObject W2Star2;
+    [SerializeField] private TMP_Text Star2Text;
 
     [SerializeField] private GameObject B1Star;
     [SerializeField] private GameObject W1Star;
+    [SerializeField] private TMP_Text Star3Text;
 
     [SerializeField] private GameObject EndBStar1;
     [SerializeField] private GameObject EndBStar2;
@@ -136,6 +134,9 @@ public class GridManager : MonoBehaviour
         ParseStarData(levelData[1]);
         LoadLevel(levelRows);
 
+        Star1Text.text = "Reach " + LevelStars[0].ToString() + "%";
+        Star2Text.text = "Reach " + LevelStars[1].ToString() + "%";
+        Star3Text.text = "Reach " + LevelStars[2].ToString() + "%";
 
         for (int i = 0; i < gridWidth; i++)
         {
@@ -189,29 +190,24 @@ public class GridManager : MonoBehaviour
         {
             stars++;
             B2Star1.SetActive(false);
-            B2Star2.SetActive(false);
             W2Star1.SetActive(true);
-            W2Star2.SetActive(true);
         }
 
         if (lights >= LevelStars[2])
         {
             stars++;
             B3Star1.SetActive(false);
-            B3Star2.SetActive(false);
-            B3Star3.SetActive(false);
             W3Star1.SetActive(true);
-            W3Star2.SetActive(true);
-            W3Star3.SetActive(true);
         }
 
         int light = (int)lights;
 
         lightCoverage.text = light.ToString() + "%";
 
-        if (lampLit == lampList.Count || stars == 3) 
+        if (lampLit == lampList.Count) 
         {
             EndScreen.SetActive(true);
+            finalScore.text = "Light Coverage: " + light.ToString() + "%";
             if (stars > 0)
             {
                 //Set progress data to the next level, and save the star count
