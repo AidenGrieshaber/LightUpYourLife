@@ -216,7 +216,7 @@ public class UIScript : MonoBehaviour
                 case '<':
                     coneCount.GetComponent<TMP_InputField>().text = tempLampData[1].ToString();
                     coneRad.GetComponent<TMP_InputField>().text = tempLampData[2].ToString();
-                    coneDir.GetComponent<TMP_InputField>().text += tempLampData[3].ToString();
+                    coneDir.GetComponent<TMP_InputField>().text = tempLampData[3].ToString();
                     break;
                 default:
                     cCount.GetComponent<TMP_InputField>().text = 3.ToString();

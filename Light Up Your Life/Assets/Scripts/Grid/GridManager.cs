@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
-using UnityEngine.Windows;
-using Unity.VisualScripting;
-using System.Collections.Generic;
 
 /// <summary>
 /// Created by Chris LoSardo
@@ -102,7 +102,12 @@ public class GridManager : MonoBehaviour
 
         lampList = new List<Lamp>();
 
-        filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
+        //Creates the LevelData folder in the streaming assets directory
+        Directory.CreateDirectory(Application.streamingAssetsPath + "/LevelData/");
+
+
+        //Assigns the file path for the level data file so that it can be read from and written to
+        filePath = Application.streamingAssetsPath + "/LevelData/LevelData.txt";
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
@@ -409,6 +414,26 @@ public class GridManager : MonoBehaviour
                         newLampCone.lightDistance = int.Parse(tempLampData[2]);
 
                         lampManager.AddLamp(newLampCone);
+
+                        switch (int.Parse(tempLampData[3]))
+                        {
+                            case 1:
+                                newLampCone.GetComponent<ConeLamp>().setDir(newLampCone.GetComponent<ConeLamp>().DirectionGet = Direction.Up);
+                                break;
+                            case 2:
+                                newLampCone.GetComponent<ConeLamp>().setDir(newLampCone.GetComponent<ConeLamp>().DirectionGet = Direction.Right);
+                                break;
+                            case 3:
+                                newLampCone.GetComponent<ConeLamp>().setDir(newLampCone.GetComponent<ConeLamp>().DirectionGet = Direction.Down);
+                                break;
+                            case 4:
+                                newLampCone.GetComponent<ConeLamp>().setDir(newLampCone.GetComponent<ConeLamp>().DirectionGet = Direction.Left);
+                                break;
+                            default:
+                                newLampCone.GetComponent<ConeLamp>().setDir(newLampCone.GetComponent<ConeLamp>().DirectionGet = Direction.Up);
+                                break;
+
+                        }
                     }
                     lampHeight -= int.Parse(tempLampData[1]);
                     break;

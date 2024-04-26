@@ -92,8 +92,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
         {
             state = LampState.Held;
 
-            if (attachment != null)
-                attachment.SetActive(false);
+            //if (attachment != null)
+            //    attachment.SetActive(false);
 
             lampHeldSFX.Play();
         }

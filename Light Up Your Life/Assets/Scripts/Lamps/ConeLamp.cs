@@ -20,6 +20,14 @@ public class ConeLamp : Lamp
     private static float animationTimer = .12f;
     public LayerMask IgnoreLayer;
     public Direction dir;
+
+
+    public Direction DirectionGet
+    {
+        get { return dir; }
+        set { dir = value; }
+    }
+
     protected override void Update()
     {
         //plays the lamp animation, runs through sprites until sprite 6, and then loops last 3
@@ -242,16 +250,16 @@ public class ConeLamp : Lamp
         switch (dir)
         {
             case Direction.Up:
-                attachment.transform.rotation = Quaternion.identity;
-                break;
-            case Direction.Down:
                 attachment.transform.rotation = Quaternion.Euler(0, 0, 180);
                 break;
+            case Direction.Down:
+                attachment.transform.rotation = Quaternion.identity;
+                break;
             case Direction.Left:
-                attachment.transform.rotation = Quaternion.Euler(0, 0, 90);
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 270);
                 break;
             case Direction.Right:
-                attachment.transform.rotation = Quaternion.Euler(0, 0, 270);
+                attachment.transform.rotation = Quaternion.Euler(0, 0, 90);
                 break;
         }
     }
