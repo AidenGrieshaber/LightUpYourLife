@@ -46,6 +46,11 @@ public class Lamp : MonoBehaviour //Lamp parent master
     //position of this lamp on the hotbar
     public Vector3 HotbarPosition;
 
+    //Sounds
+    public AudioSource lampPlacedSFX;
+    public AudioSource lampHeldSFX;
+    public AudioSource lampFailSFX;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -89,6 +94,8 @@ public class Lamp : MonoBehaviour //Lamp parent master
 
             if (attachment != null)
                 attachment.SetActive(false);
+
+            lampHeldSFX.Play();
         }
     }
 
@@ -103,6 +110,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
             {
                 SnapToGrid(nearest);
                 gridManager.UnHighlightTiles();
+                lampPlacedSFX.Play();
             }
             else
             {
@@ -110,6 +118,7 @@ public class Lamp : MonoBehaviour //Lamp parent master
                 state = LampState.Hotbar;
                 transform.position = HotbarPosition;
                 gridManager.UnHighlightTiles();
+                lampFailSFX.Play();
             }
 
             LightTiles();
