@@ -44,7 +44,7 @@ public class ButtonScript : MonoBehaviour
     }
     public void ButtonColorChange()
     {
-        Debug.Log("previous State:  " + state);
+        //Debug.Log("previous State:  " + state);
         switch (state)
         {
             case ButtonState.Tile:
