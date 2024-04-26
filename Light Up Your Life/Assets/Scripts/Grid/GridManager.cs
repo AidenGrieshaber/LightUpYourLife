@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Windows;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
 /// <summary>
 /// Created by Chris LoSardo
@@ -14,8 +14,8 @@ using UnityEngine.UI;
 /// </summary>
 public class GridManager : MonoBehaviour
 {
-    private int gridHeight;
-    private int gridWidth;
+    [SerializeField] private int gridWidth;
+    [SerializeField] private int gridHeight;
 
     //Reference to the tile prefab that makes up the grid
     [SerializeField] private Tile tileObject;
@@ -29,7 +29,6 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject gridTiles;
-    [SerializeField] private GameObject lampPos;
     [SerializeField] private GameObject lampDockBackground;
 
     [SerializeField] private TMP_Text lightCoverage;
@@ -83,8 +82,6 @@ public class GridManager : MonoBehaviour
     private List<string> levelLamps;
     private List<int> LevelStars;
 
-    private float tileSize = 50;
-
     public Tile[,] TileArray
     {
         get
@@ -95,6 +92,7 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        tileArray = new Tile[gridWidth, gridHeight];
         //GenerateDefaultGrid();
 
         int levelNum = Singleton.Instance.ID;
@@ -104,9 +102,7 @@ public class GridManager : MonoBehaviour
 
         lampList = new List<Lamp>();
 
-        Directory.CreateDirectory(Application.streamingAssetsPath + "/LevelData/");
-
-        filePath = Application.streamingAssetsPath + "/LevelData/LevelData.txt";
+        filePath = Application.dataPath + "/Assets/LevelGen/TestLevel.txt";
 
         //Index of each level
         string[] levelIndex = System.IO.File.ReadAllLines(filePath);
@@ -121,17 +117,16 @@ public class GridManager : MonoBehaviour
             if (i <= 1)
             {
                 levelDetails.Add(levelData[i]);
+
+                //Debug.Log("LevelDetails " + i + ": " + levelDetails[i]);
             }
             else
             {
                 levelRows.Add(levelData[i]);
+                //Debug.Log("levelRows " + (i - 2) + ": " + levelRows[i - 2]);
+
             }
         }
-
-        gridHeight = levelRows[0].Length;
-        gridWidth = levelRows.Count;
-
-        tileArray = new Tile[gridWidth, gridHeight];
 
         ParseLampData(levelData[0]);
         lampList = lampManager.LampsGet;
@@ -147,7 +142,6 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < gridHeight; j++)
             {
-                Debug.Log("TileArray[" + i + "][" + j + "]:  " + tileArray[i, j].TileTypeGet);
                 if (tileArray[i, j].TileTypeGet == TileType.Tile)
                 {
                     tileArray[i, j].posX = i;
@@ -310,20 +304,10 @@ public class GridManager : MonoBehaviour
             //Determines the height of the grid
             for (int j = 0; j < levelTiles[0].Length; j++)
             {
-                float posX;
-                float posY;
-
-                Tile newTile;
-
-                tileSize = 1.0287158f;
-                posX = j * tileSize;
-                posY = i * -tileSize;
-
-                newTile = Instantiate(tileObject, new Vector3(posX, posY), Quaternion.identity, gridTiles.transform);
-
-                newTile.transform.position = new Vector2(posX + gridTiles.transform.position.x, posY + gridTiles.transform.position.y);
 
 
+
+                Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
                 //Sets the type of the tile (Tile, Obstacle, etc.) based on the character stored in levelRows[i][j]
                 newTile.SetTileType(newTile, levelTiles[i][j]);
                 //Sets the name of each tile in the inspector
@@ -341,7 +325,7 @@ public class GridManager : MonoBehaviour
         }
 
         //Sets the position of the camera to above the created grid
-        mainCamera.transform.position = new Vector3((float)gridHeight / 2 - 0.5f, (float)gridWidth / 2 - 0.5f, -10);
+        mainCamera.transform.position = new Vector3((float)gridWidth / 2 - 0.5f, (float)gridHeight / 2 - 0.5f, -10);
 
     }
     public void TriggerNextLevel()
@@ -366,7 +350,7 @@ public class GridManager : MonoBehaviour
 
         string[] tempArray = levelData0.Split('|');
 
-        float lampHeight = 4.4f;
+        float lampHeight = 6.7f;
 
         for (int i = 0; i < tempArray.Length; i++)
         {
@@ -383,11 +367,7 @@ public class GridManager : MonoBehaviour
                 case 'C':
                     for (int a = 0; a < int.Parse(tempLampData[1]); a++)
                     {
-
-              //newTile = Instantiate(tileObject, new Vector3(posX, posY), Quaternion.identity, gridTiles.transform);
-
-              //newTile.transform.position = new Vector2(posX + gridTiles.transform.position.x, posY + gridTiles.transform.position.y);
-                        CircleLamp newLampC = Instantiate(circleLampObject, new Vector3(-3.17f, lampHeight - a), Quaternion.identity, lampPos.transform); ;
+                        CircleLamp newLampC = Instantiate(circleLampObject, new Vector3(-3.17f, lampHeight - a), Quaternion.identity); ;
 
                         newLampC.gridManager = this;
                         newLampC.lightDistance = int.Parse(tempLampData[2]);
@@ -399,7 +379,7 @@ public class GridManager : MonoBehaviour
                 case 'S':
                     for (int b = 0; b < int.Parse(tempLampData[1]); b++)
                     {
-                        SquareLamp newLampS = Instantiate(squareLampObject, new Vector3(-4.6f, lampHeight - b), Quaternion.identity, lampPos.transform); ;
+                        SquareLamp newLampS = Instantiate(squareLampObject, new Vector3(-3.17f, lampHeight - b), Quaternion.identity); ;
 
                         newLampS.gridManager = this;
                         newLampS.lightDistance = int.Parse(tempLampData[2]);

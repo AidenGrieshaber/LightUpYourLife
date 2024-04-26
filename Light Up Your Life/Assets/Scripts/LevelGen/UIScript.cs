@@ -32,16 +32,10 @@ public class UIScript : MonoBehaviour
     private List<Button> mapButtons = new List<Button>();
     private float buttonSize = 40;
 
-<<<<<<< Updated upstream
-    //Lamp and Star Data
-    [SerializeField] private LampManager lampManager;
-
-=======
-    private int levelHeight;
     private int levelWidth;
+    private int levelHeight;
 
     //Lamp and Star Data
->>>>>>> Stashed changes
     [SerializeField] private GameObject cCount;
     [SerializeField] private GameObject cRad;
     [SerializeField] private GameObject sCount;
@@ -58,11 +52,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] private GameObject threeStar;
 
 
-
-<<<<<<< Updated upstream
-=======
     //Used for getting the filepath without passing it through a method
->>>>>>> Stashed changes
     public string FilePathGet
     {
         get
@@ -71,10 +61,7 @@ public class UIScript : MonoBehaviour
         }
     }
 
-<<<<<<< Updated upstream
-=======
     //Used for getting the current list of Map Buttons
->>>>>>> Stashed changes
     public List<Button> MapButtonsGet
     {
         get
@@ -145,14 +132,14 @@ public class UIScript : MonoBehaviour
         }
 
         //Determines default value of width and height, used for saving
-        levelHeight = levelRows[0].Length;
-        levelWidth = levelRows.Count;
+        levelWidth = levelRows[0].Length;
+        levelHeight = levelRows.Count;
 
         //Determines the height of the grid
-        for (int i = 0; i < levelRows.Count; i++)
+        for (int i = 0; i < levelHeight; i++)
         {
             //Determines the width of the grid
-            for (int j = 0; j < levelRows[0].Length; j++)
+            for (int j = 0; j < levelWidth; j++)
             {
                 float posX;
                 float posY;
@@ -194,14 +181,6 @@ public class UIScript : MonoBehaviour
         #endregion
     }
 
-<<<<<<< Updated upstream
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-=======
     public void ParseLampData(string levelData0)
     {
 
@@ -257,7 +236,6 @@ public class UIScript : MonoBehaviour
         oneStar.GetComponent<TMP_InputField>().text = tempArray[0];
         twoStar.GetComponent<TMP_InputField>().text = tempArray[1];
         threeStar.GetComponent<TMP_InputField>().text = tempArray[2];
->>>>>>> Stashed changes
     }
 
     //Allows the user to manually generate grids
@@ -269,21 +247,18 @@ public class UIScript : MonoBehaviour
         {
             for (int k = 0; k < mapButtons.Count; k++)
             {
-<<<<<<< Updated upstream
-                //Debug.Log(mapButtons[k].name);
-=======
->>>>>>> Stashed changes
                 Destroy(mapButtons[k].gameObject);
             }
 
             mapButtons.Clear();
-            levelHeight = 0;
             levelWidth = 0;
+            levelHeight = 0;
         }
 
         //Assigns new values to the level width and height, used for saving
         levelHeight = int.Parse(dropdownY.options[dropdownY.value].text);
         levelWidth = int.Parse(dropdownX.options[dropdownX.value].text);
+
 
         //Determines the height of the grid
         for (int i = 0; i < int.Parse(dropdownY.options[dropdownY.value].text); i++)
@@ -330,25 +305,6 @@ public class UIScript : MonoBehaviour
     //Overwrites the file with the current level data
     public void SaveLevel()
     {
-<<<<<<< Updated upstream
-        string[] levelIndex = System.IO.File.ReadAllLines(FilePathGet);
-
-        List<Button> currentButtons = MapButtonsGet;
-        List<string> tempDetails = new List<string>();
-        List<string> tempRows = new List<string>();
-
-        levelData = levelIndex[int.Parse(currentPage.GetComponent<TextMeshProUGUI>().text) - 1].Split(',');
-
-        //for (int i = 0; i < levelData.Length; i++)
-        //{
-        //    Debug.Log(levelData[i]);
-        //}
-        //for (int j = 0; j < currentButtons.Count; j++)
-        //{
-        //    Debug.Log(currentButtons[j].GetComponent<ButtonScript>().ButtonStateGetSet);
-        //}
-
-=======
         //Creates an array (levelIndex) that contains all of the level data from the file
         string[] levelIndex = File.ReadAllLines(FilePathGet);
 
@@ -358,29 +314,9 @@ public class UIScript : MonoBehaviour
         List<string> tempRows = new List<string>();
 
         levelData = levelIndex[int.Parse(currentPage.GetComponent<TextMeshProUGUI>().text) - 1].Split(',');
->>>>>>> Stashed changes
-
 
         for (int i = 0; i < levelData.Length; i++)
         {
-<<<<<<< Updated upstream
-            string currentDetails = "";
-            if (i <= 1)
-            {
-                tempDetails.Add(levelData[i]);
-
-                for (int j = 0; j < tempDetails[j].Length; i++)
-                {
-                    Debug.Log(tempDetails[j]);
-                }
-
-                //Debug.Log("LevelDetails " + i + ": " + levelDetails[i]);
-            }
-            else
-            {
-                tempRows.Add(levelData[i]);
-                //Debug.Log("levelRows " + (i - 2) + ": " + levelRows[i - 2]);
-=======
             //Assigns the levelDetails the same way
             if (i <= 1)
             {
@@ -395,7 +331,9 @@ public class UIScript : MonoBehaviour
 
         //See bottom comment
         int stringJump = 0;
->>>>>>> Stashed changes
+
+        Debug.Log(levelWidth);
+        Debug.Log(levelHeight);
 
         //loops through the grid and creates the corresponding data line by line
         for (int j = 0; j < levelHeight; j++)
@@ -430,49 +368,10 @@ public class UIScript : MonoBehaviour
         WriteFile(tempDetails, tempRows, levelIndex);
     }
 
-<<<<<<< Updated upstream
-        int stringJump = 0;
-
-        for (int j = 0; j < levelRows.Count; j++)
-        {
-            string currentLine = "";
-            for (int k = 0; k < levelRows[0].Length; k++)
-            {
-                //Debug.Log(currentButtons[k + stringJump].GetComponent<ButtonScript>().ButtonStateGetSet);
-
-                if (currentButtons[k + stringJump].GetComponent<ButtonScript>().ButtonStateGetSet == ButtonState.Obstacle)
-                {
-                    currentLine += 'o';
-                }
-                else 
-                {
-                    currentLine += '-';
-                }
-            }
-            levelRows[j] = currentLine;
-            stringJump += levelData[2].Length;
-        }
-
-    }
-
-    public void PrintFile()
-    {
-
-    }
-
-    public void LoadLevelFromFile(string filePath)
-    {
-        #region GridGeneration
-        string[] levelIndex = System.IO.File.ReadAllLines(filePath);
-
-        //Debug.Log("CurrentPage:  " + currentPage.GetComponent<TextMeshProUGUI>().text);
-        levelData = levelIndex[int.Parse(currentPage.GetComponent<TextMeshProUGUI>().text) - 1].Split(',');
-=======
     //Reloads the current level, essentially erasing any unsaved changes
     public void ResetLevel()
     {
         #region GridGeneration
->>>>>>> Stashed changes
 
         if (mapButtons.Count != 0)
         {
@@ -491,20 +390,10 @@ public class UIScript : MonoBehaviour
             if (i <= 1)
             {
                 levelDetails.Add(levelData[i]);
-<<<<<<< Updated upstream
-
-                //Debug.Log("LevelDetails " + i + ": " + levelDetails[i]);
-=======
->>>>>>> Stashed changes
             }
             else
             {
                 levelRows.Add(levelData[i]);
-<<<<<<< Updated upstream
-                //Debug.Log("levelRows " + (i - 2) + ": " + levelRows[i - 2]);
-
-=======
->>>>>>> Stashed changes
             }
         }
 
@@ -648,6 +537,8 @@ public class UIScript : MonoBehaviour
     //Overwrites the level file
     public void WriteFile(List<string> details, List<string> rows, string[] levelIndex)
     {
+        #region FileWriting
+
         string completeString = "";
 
         //Recreates the text format for the level data using the passed in variables.
@@ -692,96 +583,4 @@ public class UIScript : MonoBehaviour
         #endregion
     }
 
-
-    public void IncrementPage()
-    {
-        int pageNum = int.Parse(currentPage.GetComponent<TextMeshProUGUI>().text);
-
-        if (pageNum != 15)
-        {
-            pageNum++;
-            currentPage.GetComponent<TextMeshProUGUI>().text = pageNum.ToString();
-            LoadLevelFromFile(FilePathGet);
-        }
-
-    }
-
-    public void DecrementPage()
-    {
-        int pageNum = int.Parse(currentPage.GetComponent<TextMeshProUGUI>().text);
-
-        if (pageNum != 1)
-        {
-            pageNum--;
-            currentPage.GetComponent<TextMeshProUGUI>().text = pageNum.ToString();
-            LoadLevelFromFile(FilePathGet);
-        }
-    }
-
-
-    public void ParseLampData(string levelData0)
-    {
-
-        levelLamps = new List<string>();
-
-        string[] tempArray = levelData0.Split('|');
-
-        for (int i = 0; i < tempArray.Length; i++)
-        {
-            levelLamps.Add(tempArray[i]);
-        }
-
-        for (int j = 0; j < levelLamps.Count; j++)
-        {
-            string[] tempLampData = levelLamps[j].Split('-');
-
-
-            switch (tempLampData[0][0])
-            {
-                case 'C':
-                    cCount.GetComponent<TMP_InputField>().text = tempLampData[1].ToString();
-                    cRad.GetComponent<TMP_InputField>().text = tempLampData[2].ToString();
-                    break;
-                case 'S':
-                    sCount.GetComponent<TMP_InputField>().text = tempLampData[1].ToString();
-                    sRad.GetComponent<TMP_InputField>().text = tempLampData[2].ToString();
-                    break;
-                case 'W':
-                    wCount.GetComponent<TMP_InputField>().text = tempLampData[1].ToString();
-                    wCount.GetComponent<TMP_InputField>().text = tempLampData[2].ToString();
-                    break;
-                case '<':
-                    coneCount.GetComponent<TMP_InputField>().text = tempLampData[1].ToString();
-                    coneRad.GetComponent<TMP_InputField>().text = tempLampData[2].ToString();
-                    coneDir.GetComponent<TMP_InputField>().text += tempLampData[3].ToString();
-                    break;
-                default:
-                    cCount.GetComponent<TMP_InputField>().text = 3.ToString();
-                    cRad.GetComponent<TMP_InputField>().text = 3.ToString();
-                    sCount.GetComponent<TMP_InputField>().text = 3.ToString();
-                    sRad.GetComponent<TMP_InputField>().text = 1.ToString();
-                    Debug.Log("Defualt LampParse LevelGen");
-                    break;
-            }
-
-        }
-
-
-
-
-    }
-
-    public void ParseStarData(string levelData1)
-    {
-        string[] tempArray = levelData1.Split('|');
-
-        oneStar.GetComponent<TMP_InputField>().text = tempArray[0];
-        twoStar.GetComponent<TMP_InputField>().text = tempArray[1];
-        threeStar.GetComponent<TMP_InputField>().text = tempArray[2];
-    }
-
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 }
