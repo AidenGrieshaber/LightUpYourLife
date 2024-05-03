@@ -9,7 +9,7 @@ C-2-3|S-3-1|W-1-3,025|055|085,---oo---o,---o-----,---o----o,---o---oo,---o---oo,
 S-2-1|W-4-3,025|055|085,---oooooo,---o-oooo,------ooo,oo-----oo,o---o---o,oo-----oo,ooo------,oooo-o---,oooooo---
 C-3-3|<-1-3-3,025|055|085,ooooooo--,ooooo----,oo-oo----,o---o----,---------,o---o----,oo-oo----,ooooo----,ooooooo--
 S-2-1|<-1-3-1,025|055|085,ooooooooo,ooo-o---o,oo--o---o,o---o---o,----ooooo,o---o---o,oo--o---o,ooo-o---o,ooooooooo
-C-2-3|W-3-0|<-1-3-1,025|055|085,-oooo---o,--oo-----,---oo----,--oooo---,-ooooo---,--oooo---,---oo----,--oo-----,-oooo---o
+C-2-3|S-1-1|W-2-3,025|055|085,-oooo---o,--oo-----,---oo----,--oooo---,-ooooo---,--oooo---,---oo----,--oo-----,-oooo---o
 S-1-1|W-2-3|<-1-3-2,025|055|085,ooooooooo,ooo---ooo,-oo---oo-,--o---o--,---ooo---,--oo-oo--,-oo---oo-,oo-----oo,o-------o
-C-2-3|S-2-1,025|055|085,ooooooooo,ooooooooo,oo-----oo,---------,---------,---------,oo-----oo,ooooooooo,ooooooooo
+C-2-3|S-2-1,025|055|085,ooooooooo,ooooooooo,oo-----oo,---------,---o-o---,---------,oo-----oo,ooooooooo,ooooooooo
 C-2-3|W-3-3,025|055|085,oo-----oo,ooo---ooo,-ooo-ooo-,--ooooo--,---ooo---,--ooooooo,-oo------,oo------o,o------oo
