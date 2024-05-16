@@ -193,6 +193,17 @@ public class UIScript : MonoBehaviour
             levelLamps.Add(tempArray[i]);
         }
 
+        cCount.GetComponent<TMP_InputField>().text = "0";
+        cRad.GetComponent<TMP_InputField>().text = "0";
+        sCount.GetComponent<TMP_InputField>().text = "0";
+        sRad.GetComponent<TMP_InputField>().text = "0";
+        wCount.GetComponent<TMP_InputField>().text = "0";
+        wCount.GetComponent<TMP_InputField>().text = "0";
+        coneCount.GetComponent<TMP_InputField>().text = "0";
+        coneRad.GetComponent<TMP_InputField>().text = "0";
+        coneDir.GetComponent<TMP_InputField>().text = "0";
+
+
         for (int j = 0; j < levelLamps.Count; j++)
         {
             string[] tempLampData = levelLamps[j].Split('-');

@@ -312,11 +312,13 @@ public class GridManager : MonoBehaviour
 
 
 
-                Tile newTile = Instantiate(tileObject, new Vector3(i, j), Quaternion.identity, gridTiles.transform);
+                Tile newTile = Instantiate(tileObject, new Vector3(j, i), Quaternion.identity, gridTiles.transform);
                 //Sets the type of the tile (Tile, Obstacle, etc.) based on the character stored in levelRows[i][j]
                 newTile.SetTileType(newTile, levelTiles[i][j]);
                 //Sets the name of each tile in the inspector
                 newTile.name = "t" + i + " " + j + " " + newTile.TileTypeGet;
+
+                newTile.transform.position = new Vector2(j + gridTiles.transform.position.x, -i + gridTiles.transform.position.y);
 
 
                 //This bool determines whether or not this tile is an even or odd tile in order
